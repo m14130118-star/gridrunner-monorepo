@@ -128,12 +128,7 @@ export default function SettingsPage() {
                 </button>
               </div>
             </>
-          ) : (
-            <div className="account-actions" style={{ flexDirection: 'column', padding: 16 }}>
-              <button className="btn btn-primary" onClick={() => router.push('/auth/login')} style={{ width: '100%', justifyContent: 'center' }}>{t('nav.login')}</button>
-              <button className="btn btn-secondary" onClick={() => router.push('/auth/register')} style={{ width: '100%', justifyContent: 'center' }}>{t('nav.register')}</button>
-            </div>
-          )}
+          ) : null}
         </section>
 
         {saved && <p className="settings-saved">{t('settings.saved')}</p>}
