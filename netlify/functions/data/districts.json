@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Арбат",
+    "lat": 55.752,
+    "lng": 37.598,
+    "radius_km": 0.5,
+    "clan_id": null,
+    "capture_points": 0,
+    "created_at": "2026-06-26T04:50:38.354Z"
+  },
+  {
+    "id": 2,
+    "name": "Патриаршие",
+    "lat": 55.764,
+    "lng": 37.592,
+    "radius_km": 0.4,
+    "clan_id": null,
+    "capture_points": 0,
+    "created_at": "2026-06-26T04:50:38.355Z"
+  },
+  {
+    "id": 3,
+    "name": "Китай-город",
+    "lat": 55.756,
+    "lng": 37.634,
+    "radius_km": 0.6,
+    "clan_id": null,
+    "capture_points": 0,
+    "created_at": "2026-06-26T04:50:38.355Z"
+  }
+]
