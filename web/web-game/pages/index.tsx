@@ -9,7 +9,7 @@ const FEATURES = [
   { icon: 'fa-crosshairs', titleRu: 'Arena-режим', titleEn: 'Arena Mode', descRu: 'Сражайся за районы, ставь ловушки, захватывай территорию', descEn: 'Fight for districts, place traps, capture territory' },
   { icon: 'fa-crown', titleRu: 'VIP-привилегии', titleEn: 'VIP Perks', descRu: 'Эксклюзивный транспорт, двойной XP и золото', descEn: 'Exclusive vehicles, double XP & gold' },
   { icon: 'fa-users', titleRu: 'Сообщество', titleEn: 'Community', descRu: 'Краудсорсинг POI, голосование, общие маршруты', descEn: 'Crowdsourced POI, voting, shared routes' },
-  { icon: 'fa-mobile-screen', titleRu: 'APK для Android', titleEn: 'Android APK', descRu: 'Полноценное нативное приложение через Capacitor', descEn: 'Full native app via Capacitor' },
+  { icon: 'fa-globe', titleRu: 'Веб-версия', titleEn: 'Web Version', descRu: 'Играй прямо в браузере без установки', descEn: 'Play directly in your browser, no install needed' },
 ];
 
 const HOW_IT_WORKS = [
@@ -106,23 +106,6 @@ export default function Home() {
                   <p className="step-desc">{s.descEn}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* APK Download */}
-        <section className="landing-section">
-          <div className="landing-container">
-            <div className="download-card card">
-              <div className="download-icon">
-                <i className="fa-solid fa-mobile-screen"></i>
-              </div>
-              <h2 className="download-title">Mobile APK</h2>
-              <p className="download-desc">Native Android app with GPS tracking, real-time sync & full game features</p>
-              <a href="/GridRunner.apk" download className="btn btn-primary btn-lg" data-sound="success">
-                <i className="fa-solid fa-download"></i> Download APK
-              </a>
-              <p className="download-note">Requires Android 8+. Backend runs on your PC.</p>
             </div>
           </div>
         </section>

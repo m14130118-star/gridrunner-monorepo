@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GridRunner — Исследуй город по-новому</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0f0d;
+      color: #e0f0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    header {
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+    .logo span { color: #00e676; }
+    nav a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #00e676; }
+    nav a.btn-link {
+      color: #00e676;
+      font-weight: 600;
+    }
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #00e676 0%, #7c3aed 50%, #00e676 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #00e676;
+      color: #0a0f0d;
+      border: none;
+      border-radius: 12px;
+    }
+    .btn-primary:hover { background: #00c853; transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: #e0f0e0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+    .btn-lg { padding: 16px 32px; font-size: 17px; }
+    .stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 800; color: #00e676; }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+    .section {
+      padding: 60px 0;
+    }
+    .section h2 {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 15px;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .feature {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .feature:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+    }
+    .feature-icon { font-size: 32px; margin-bottom: 12px; color: #00e676; }
+    .feature h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .download-section {
+      text-align: center;
+      padding: 60px 0;
+    }
+    .download-section h2 { margin-bottom: 8px; }
+    .download-section p { color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+    .apk-info {
+      display: inline-block;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+    }
+    .apk-info i { margin-right: 6px; }
+    .play-link {
+      margin-top: 24px;
+      font-size: 14px;
+    }
+    .play-link a {
+      color: #7c3aed;
+      text-decoration: none;
+    }
+    .play-link a:hover { text-decoration: underline; }
+    footer {
+      margin-top: auto;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 15px; }
+      .stats { gap: 24px; }
+      .stat-num { font-size: 22px; }
+      header { flex-direction: column; gap: 12px; }
+      nav a { margin: 0 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%">
+      <div class="logo">grid<span>runner</span></div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="https://spectacular-muffin-d950a0.netlify.app" class="btn-link"><i class="fa-solid fa-play"></i> Play Online</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Urban exploration <br>reimagined</h1>
+      <p>GridRunner turns your city into a game. Explore districts, check in at POIs, complete routes, and compete on the leaderboard. By foot, skate, bike, or car.</p>
+      <div class="hero-buttons">
+        <a href="https://spectacular-muffin-d950a0.netlify.app" class="btn btn-primary btn-lg">
+          <i class="fa-solid fa-play"></i> Play Online
+        </a>
+        <a href="#download" class="btn btn-secondary btn-lg">
+          <i class="fa-solid fa-download"></i> Get APK
+        </a>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num"><i class="fa-solid fa-location-dot"></i> 119+</div>
+          <div class="stat-label">POI in Moscow</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><i class="fa-solid fa-route"></i> ∞</div>
+          <div class="stat-label">Generated Routes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><i class="fa-solid fa-trophy"></i> Top 50</div>
+          <div class="stat-label">Leaderboard</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <h2>Why GridRunner?</h2>
+      <p class="section-desc">A unique blend of exploration, gamification, and real-world activity</p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><i class="fa-solid fa-route"></i></div>
+          <h3>Smart Routes</h3>
+          <p>AI generates optimal routes through your city based on your vibe, vehicle, and preferences</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+          <h3>Check-in System</h3>
+          <p>Visit real locations, check in via GPS, and earn XP & gold for every stop</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fa-solid fa-car"></i></div>
+          <h3>Multiple Vehicles</h3>
+          <p>Walk, skateboard, bike, or drive — each vehicle has different speed, range, and resource consumption</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fa-solid fa-music"></i></div>
+          <h3>Procedural Music</h3>
+          <p>Dynamic beats generated in real-time based on your vibe and speed</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fa-solid fa-ranking-star"></i></div>
+          <h3>Leaderboard</h3>
+          <p>Compete with other players for the top spot based on XP and achievements</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fa-solid fa-palette"></i></div>
+          <h3>4 Themes</h3>
+          <p>Choose from Ice, Night, Oldschool, or Thermo themes to match your style</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="download-section" id="download">
+    <div class="container">
+      <h2><i class="fa-solid fa-mobile-screen"></i> Get the App</h2>
+      <p>Download the native Android APK for the full experience</p>
+      <a href="https://spectacular-muffin-d950a0.netlify.app/GridRunner.apk" download class="btn btn-primary btn-lg">
+        <i class="fa-solid fa-download"></i> Download APK (49.8 MB)
+      </a>
+      <div class="apk-info">
+        <i class="fa-solid fa-info-circle"></i> Android 8+ required. Backend runs on your PC or VPS.
+      </div>
+      <div class="play-link">
+        <i class="fa-solid fa-globe"></i> Prefer the web version? <a href="https://spectacular-muffin-d950a0.netlify.app">Play online →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>GridRunner &copy; 2026 &mdash; Open source urban exploration game</p>
+    </div>
+  </footer>
+</body>
+</html>
