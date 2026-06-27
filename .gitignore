@@ -1,0 +1,12 @@
+node_modules/
+web/web-game/out/
+web/web-game/.next/
+web/web-game/android/.gradle/
+web/web-game/android/app/build/
+web/web-game/android/capacitor-cordova-android-plugins/
+web/web-game/android/capacitor-android/
+*.apk
+*.log
+.env
+.env.local
+web/web-landing.zip  

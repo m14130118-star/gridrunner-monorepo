@@ -1,0 +1,3430 @@
+[
+  {
+    "id": 1,
+    "osm_id": "osm_1",
+    "name": "Surf Coffee",
+    "lat": 55.7562,
+    "lng": 37.6185,
+    "category": "food",
+    "vibe_tags": [
+      "#urban_underground",
+      "#graffiti"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 12,
+      "down": 1
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cafe"
+    },
+    "is_active": true,
+    "restore_hp": 35,
+    "check_in_radius": 30,
+    "gold_reward": 50,
+    "xp_reward": 25
+  },
+  {
+    "id": 2,
+    "osm_id": "osm_2",
+    "name": "Парк Горького",
+    "lat": 55.7312,
+    "lng": 37.6043,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#pavement",
+      "#smooth_flow"
+    ],
+    "base_rating": 85,
+    "votes": {
+      "up": 20,
+      "down": 0
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 20,
+    "check_in_radius": 50,
+    "gold_reward": 30,
+    "xp_reward": 15
+  },
+  {
+    "id": 3,
+    "osm_id": "osm_3",
+    "name": "Шоколадница",
+    "lat": 55.7612,
+    "lng": 37.6321,
+    "category": "food",
+    "vibe_tags": [
+      "#scenic",
+      "#pavement"
+    ],
+    "base_rating": 55,
+    "votes": {
+      "up": 5,
+      "down": 2
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cafe"
+    },
+    "is_active": true,
+    "restore_hp": 35,
+    "check_in_radius": 30,
+    "gold_reward": 50,
+    "xp_reward": 25
+  },
+  {
+    "id": 4,
+    "osm_id": "osm_4",
+    "name": "Кинотеатр Художественный",
+    "lat": 55.7587,
+    "lng": 37.6105,
+    "category": "culture",
+    "vibe_tags": [
+      "#urban_underground",
+      "#courtyard",
+      "#night"
+    ],
+    "base_rating": 65,
+    "votes": {
+      "up": 8,
+      "down": 1
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cinema"
+    },
+    "is_active": true,
+    "restore_hp": 15,
+    "check_in_radius": 30,
+    "gold_reward": 40,
+    "xp_reward": 20
+  },
+  {
+    "id": 5,
+    "osm_id": "osm_5",
+    "name": "Воробьёвы горы",
+    "lat": 55.7181,
+    "lng": 37.5434,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#bridge"
+    ],
+    "base_rating": 95,
+    "votes": {
+      "up": 30,
+      "down": 0
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 30,
+    "check_in_radius": 50,
+    "gold_reward": 35,
+    "xp_reward": 20
+  },
+  {
+    "id": 6,
+    "osm_id": "osm_6",
+    "name": "Крыша на Патриках",
+    "lat": 55.7648,
+    "lng": 37.591,
+    "category": "culture",
+    "vibe_tags": [
+      "#dark_vibe",
+      "#night",
+      "#view",
+      "#panorama"
+    ],
+    "base_rating": 90,
+    "votes": {
+      "up": 18,
+      "down": 2
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "viewpoint"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 45,
+    "xp_reward": 30
+  },
+  {
+    "id": 7,
+    "osm_id": "osm_7",
+    "name": "Заброшенный цех ЗИЛ",
+    "lat": 55.7075,
+    "lng": 37.642,
+    "category": "other",
+    "vibe_tags": [
+      "#urban_underground",
+      "#abandoned",
+      "#factory",
+      "#graffiti",
+      "#dark_vibe"
+    ],
+    "base_rating": 88,
+    "votes": {
+      "up": 15,
+      "down": 3
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "industrial"
+    },
+    "is_active": true,
+    "restore_hp": 40,
+    "check_in_radius": 40,
+    "gold_reward": 60,
+    "xp_reward": 35
+  },
+  {
+    "id": 8,
+    "osm_id": "osm_8",
+    "name": "Набережная Москвы-реки",
+    "lat": 55.7485,
+    "lng": 37.5385,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#smooth_flow",
+      "#pavement"
+    ],
+    "base_rating": 80,
+    "votes": {
+      "up": 22,
+      "down": 0
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 20,
+    "check_in_radius": 50,
+    "gold_reward": 25,
+    "xp_reward": 15
+  },
+  {
+    "id": 9,
+    "osm_id": "osm_9",
+    "name": "Граффити-стена на Ордынке",
+    "lat": 55.742,
+    "lng": 37.6225,
+    "category": "culture",
+    "vibe_tags": [
+      "#urban_underground",
+      "#graffiti",
+      "#courtyard"
+    ],
+    "base_rating": 75,
+    "votes": {
+      "up": 14,
+      "down": 1
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "artwork"
+    },
+    "is_active": true,
+    "restore_hp": 10,
+    "check_in_radius": 20,
+    "gold_reward": 20,
+    "xp_reward": 10
+  },
+  {
+    "id": 10,
+    "osm_id": "osm_10",
+    "name": "Туннель на Садовом",
+    "lat": 55.766,
+    "lng": 37.61,
+    "category": "other",
+    "vibe_tags": [
+      "#dark_vibe",
+      "#tunnel",
+      "#industrial",
+      "#night"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 11,
+      "down": 4
+    },
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "tunnel"
+    },
+    "is_active": true,
+    "restore_hp": 5,
+    "check_in_radius": 15,
+    "gold_reward": 15,
+    "xp_reward": 10
+  },
+  {
+    "id": 11,
+    "osm_id": "osm_12",
+    "name": "Кофемания на Тверской",
+    "lat": 55.7645,
+    "lng": 37.606,
+    "category": "food",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 65,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cafe"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 39,
+    "xp_reward": 20
+  },
+  {
+    "id": 12,
+    "osm_id": "osm_13",
+    "name": "ЦУМ",
+    "lat": 55.758,
+    "lng": 37.6145,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#square"
+    ],
+    "base_rating": 50,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "department_store"
+    },
+    "is_active": true,
+    "restore_hp": 18,
+    "check_in_radius": 30,
+    "gold_reward": 30,
+    "xp_reward": 15
+  },
+  {
+    "id": 13,
+    "osm_id": "osm_14",
+    "name": "Большой театр",
+    "lat": 55.7601,
+    "lng": 37.6186,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#square"
+    ],
+    "base_rating": 90,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "theatre"
+    },
+    "is_active": true,
+    "restore_hp": 31,
+    "check_in_radius": 30,
+    "gold_reward": 54,
+    "xp_reward": 27
+  },
+  {
+    "id": 14,
+    "osm_id": "osm_15",
+    "name": "Красная площадь",
+    "lat": 55.754,
+    "lng": 37.621,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#square",
+      "#pedestrian",
+      "#night"
+    ],
+    "base_rating": 95,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "attraction"
+    },
+    "is_active": true,
+    "restore_hp": 33,
+    "check_in_radius": 30,
+    "gold_reward": 57,
+    "xp_reward": 29
+  },
+  {
+    "id": 15,
+    "osm_id": "osm_16",
+    "name": "Елисеевский магазин",
+    "lat": 55.7655,
+    "lng": 37.6055,
+    "category": "shop",
+    "vibe_tags": [
+      "#scenic",
+      "#pavement"
+    ],
+    "base_rating": 60,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "grocery"
+    },
+    "is_active": true,
+    "restore_hp": 21,
+    "check_in_radius": 30,
+    "gold_reward": 36,
+    "xp_reward": 18
+  },
+  {
+    "id": 16,
+    "osm_id": "osm_17",
+    "name": "Ресторан Dr. Живаго",
+    "lat": 55.7572,
+    "lng": 37.6138,
+    "category": "food",
+    "vibe_tags": [
+      "#scenic",
+      "#night"
+    ],
+    "base_rating": 75,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "restaurant"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 45,
+    "xp_reward": 23
+  },
+  {
+    "id": 17,
+    "osm_id": "osm_18",
+    "name": "ГУМ",
+    "lat": 55.7548,
+    "lng": 37.6218,
+    "category": "shop",
+    "vibe_tags": [
+      "#scenic",
+      "#pedestrian",
+      "#square"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 18,
+    "osm_id": "osm_19",
+    "name": "Музей Истории",
+    "lat": 55.7555,
+    "lng": 37.617,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#square"
+    ],
+    "base_rating": 80,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "museum"
+    },
+    "is_active": true,
+    "restore_hp": 28,
+    "check_in_radius": 30,
+    "gold_reward": 48,
+    "xp_reward": 24
+  },
+  {
+    "id": 19,
+    "osm_id": "osm_20",
+    "name": "Парк Зарядье",
+    "lat": 55.751,
+    "lng": 37.623,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#bridge"
+    ],
+    "base_rating": 88,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 31,
+    "check_in_radius": 30,
+    "gold_reward": 53,
+    "xp_reward": 26
+  },
+  {
+    "id": 20,
+    "osm_id": "osm_21",
+    "name": "Чистые пруды",
+    "lat": 55.762,
+    "lng": 37.64,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#alley"
+    ],
+    "base_rating": 72,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 43,
+    "xp_reward": 22
+  },
+  {
+    "id": 21,
+    "osm_id": "osm_22",
+    "name": "Патриарший мост",
+    "lat": 55.7445,
+    "lng": 37.607,
+    "category": "view",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#bridge",
+      "#embankment",
+      "#night"
+    ],
+    "base_rating": 85,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "pedestrian"
+    },
+    "is_active": true,
+    "restore_hp": 30,
+    "check_in_radius": 30,
+    "gold_reward": 51,
+    "xp_reward": 26
+  },
+  {
+    "id": 22,
+    "osm_id": "osm_23",
+    "name": "Музей Пушкина",
+    "lat": 55.744,
+    "lng": 37.605,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard"
+    ],
+    "base_rating": 82,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "museum"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 49,
+    "xp_reward": 25
+  },
+  {
+    "id": 23,
+    "osm_id": "osm_24",
+    "name": "Ресторан «Пушкинъ»",
+    "lat": 55.7648,
+    "lng": 37.608,
+    "category": "food",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard"
+    ],
+    "base_rating": 78,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "restaurant"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 47,
+    "xp_reward": 23
+  },
+  {
+    "id": 24,
+    "osm_id": "osm_25",
+    "name": "ТЦ Атриум",
+    "lat": 55.7595,
+    "lng": 37.647,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 45,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 16,
+    "check_in_radius": 30,
+    "gold_reward": 27,
+    "xp_reward": 14
+  },
+  {
+    "id": 25,
+    "osm_id": "osm_26",
+    "name": "Сквер у Никитских ворот",
+    "lat": 55.758,
+    "lng": 37.598,
+    "category": "park",
+    "vibe_tags": [
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 55,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 19,
+    "check_in_radius": 30,
+    "gold_reward": 33,
+    "xp_reward": 17
+  },
+  {
+    "id": 26,
+    "osm_id": "osm_27",
+    "name": "Парк Дубки",
+    "lat": 55.831,
+    "lng": 37.555,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 65,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 39,
+    "xp_reward": 20
+  },
+  {
+    "id": 27,
+    "osm_id": "osm_28",
+    "name": "Речной вокзал",
+    "lat": 55.8535,
+    "lng": 37.4765,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#panorama"
+    ],
+    "base_rating": 78,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "building"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 47,
+    "xp_reward": 23
+  },
+  {
+    "id": 28,
+    "osm_id": "osm_29",
+    "name": "Парк Северное Тушино",
+    "lat": 55.865,
+    "lng": 37.445,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#smooth_flow"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 29,
+    "osm_id": "osm_30",
+    "name": "Спорткомплекс Динамо",
+    "lat": 55.79,
+    "lng": 37.558,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement"
+    ],
+    "base_rating": 60,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "stadium"
+    },
+    "is_active": true,
+    "restore_hp": 21,
+    "check_in_radius": 30,
+    "gold_reward": 36,
+    "xp_reward": 18
+  },
+  {
+    "id": 30,
+    "osm_id": "osm_31",
+    "name": "ВДНХ (северный вход)",
+    "lat": 55.8225,
+    "lng": 37.641,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#square",
+      "#pedestrian"
+    ],
+    "base_rating": 85,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 30,
+    "check_in_radius": 30,
+    "gold_reward": 51,
+    "xp_reward": 26
+  },
+  {
+    "id": 31,
+    "osm_id": "osm_32",
+    "name": "Стадион ЦСКА",
+    "lat": 55.788,
+    "lng": 37.511,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement"
+    ],
+    "base_rating": 65,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "stadium"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 39,
+    "xp_reward": 20
+  },
+  {
+    "id": 32,
+    "osm_id": "osm_33",
+    "name": "Тимирязевский парк",
+    "lat": 55.817,
+    "lng": 37.537,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#dark_vibe"
+    ],
+    "base_rating": 60,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 21,
+    "check_in_radius": 30,
+    "gold_reward": 36,
+    "xp_reward": 18
+  },
+  {
+    "id": 33,
+    "osm_id": "osm_34",
+    "name": "Яхт-клуб на Химкинском",
+    "lat": 55.84,
+    "lng": 37.458,
+    "category": "sport",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#view"
+    ],
+    "base_rating": 72,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "marina"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 43,
+    "xp_reward": 22
+  },
+  {
+    "id": 34,
+    "osm_id": "osm_35",
+    "name": "Главный ботанический сад",
+    "lat": 55.838,
+    "lng": 37.6,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 75,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "garden"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 45,
+    "xp_reward": 23
+  },
+  {
+    "id": 35,
+    "osm_id": "osm_36",
+    "name": "Останкинская телебашня",
+    "lat": 55.82,
+    "lng": 37.6115,
+    "category": "view",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama"
+    ],
+    "base_rating": 90,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "attraction"
+    },
+    "is_active": true,
+    "restore_hp": 31,
+    "check_in_radius": 30,
+    "gold_reward": 54,
+    "xp_reward": 27
+  },
+  {
+    "id": 36,
+    "osm_id": "osm_37",
+    "name": "Спорткомплекс Олимпийский",
+    "lat": 55.78,
+    "lng": 37.625,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pedestrian"
+    ],
+    "base_rating": 68,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "stadium"
+    },
+    "is_active": true,
+    "restore_hp": 24,
+    "check_in_radius": 30,
+    "gold_reward": 41,
+    "xp_reward": 20
+  },
+  {
+    "id": 37,
+    "osm_id": "osm_38",
+    "name": "Парк Сокольники",
+    "lat": 55.79,
+    "lng": 37.68,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow",
+      "#pavement"
+    ],
+    "base_rating": 82,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 49,
+    "xp_reward": 25
+  },
+  {
+    "id": 38,
+    "osm_id": "osm_39",
+    "name": "Лосиный Остров",
+    "lat": 55.858,
+    "lng": 37.708,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#dark_vibe",
+      "#alley"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "nature_reserve"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 39,
+    "osm_id": "osm_40",
+    "name": "Усадьба Останкино",
+    "lat": 55.826,
+    "lng": 37.605,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard",
+      "#alley"
+    ],
+    "base_rating": 76,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "estate"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 46,
+    "xp_reward": 23
+  },
+  {
+    "id": 40,
+    "osm_id": "osm_41",
+    "name": "Сквер на ВДНХ",
+    "lat": 55.828,
+    "lng": 37.632,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#square",
+      "#pedestrian"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 41,
+    "osm_id": "osm_42",
+    "name": "ТЦ Золотой Вавилон",
+    "lat": 55.81,
+    "lng": 37.638,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 40,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 14,
+    "check_in_radius": 30,
+    "gold_reward": 24,
+    "xp_reward": 12
+  },
+  {
+    "id": 42,
+    "osm_id": "osm_43",
+    "name": "Измайловский парк",
+    "lat": 55.788,
+    "lng": 37.752,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow",
+      "#dark_vibe"
+    ],
+    "base_rating": 78,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 47,
+    "xp_reward": 23
+  },
+  {
+    "id": 43,
+    "osm_id": "osm_44",
+    "name": "Кремль в Измайлово",
+    "lat": 55.795,
+    "lng": 37.755,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#square",
+      "#pedestrian"
+    ],
+    "base_rating": 72,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "attraction"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 43,
+    "xp_reward": 22
+  },
+  {
+    "id": 44,
+    "osm_id": "osm_45",
+    "name": "Терлецкая дубрава",
+    "lat": 55.77,
+    "lng": 37.802,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#dark_vibe"
+    ],
+    "base_rating": 62,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 22,
+    "check_in_radius": 30,
+    "gold_reward": 37,
+    "xp_reward": 19
+  },
+  {
+    "id": 45,
+    "osm_id": "osm_46",
+    "name": "Сокольники (восточная часть)",
+    "lat": 55.797,
+    "lng": 37.708,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#pavement"
+    ],
+    "base_rating": 68,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 24,
+    "check_in_radius": 30,
+    "gold_reward": 41,
+    "xp_reward": 20
+  },
+  {
+    "id": 46,
+    "osm_id": "osm_47",
+    "name": "Спорткомплекс Локомотив",
+    "lat": 55.806,
+    "lng": 37.737,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement"
+    ],
+    "base_rating": 58,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "stadium"
+    },
+    "is_active": true,
+    "restore_hp": 20,
+    "check_in_radius": 30,
+    "gold_reward": 35,
+    "xp_reward": 17
+  },
+  {
+    "id": 47,
+    "osm_id": "osm_48",
+    "name": "Сиреневый сад",
+    "lat": 55.802,
+    "lng": 37.784,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley"
+    ],
+    "base_rating": 55,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "garden"
+    },
+    "is_active": true,
+    "restore_hp": 19,
+    "check_in_radius": 30,
+    "gold_reward": 33,
+    "xp_reward": 17
+  },
+  {
+    "id": 48,
+    "osm_id": "osm_49",
+    "name": "ТЦ Щёлково",
+    "lat": 55.81,
+    "lng": 37.798,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 38,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 13,
+    "check_in_radius": 30,
+    "gold_reward": 23,
+    "xp_reward": 11
+  },
+  {
+    "id": 49,
+    "osm_id": "osm_50",
+    "name": "Кузьминский парк",
+    "lat": 55.685,
+    "lng": 37.765,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow",
+      "#embankment"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 50,
+    "osm_id": "osm_51",
+    "name": "Музей-усадьба Кузьминки",
+    "lat": 55.69,
+    "lng": 37.77,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard",
+      "#alley"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "estate"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 51,
+    "osm_id": "osm_52",
+    "name": "Парк 850-летия Москвы",
+    "lat": 55.71,
+    "lng": 37.72,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#smooth_flow"
+    ],
+    "base_rating": 66,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 40,
+    "xp_reward": 20
+  },
+  {
+    "id": 52,
+    "osm_id": "osm_53",
+    "name": "ТЦ Мозаика",
+    "lat": 55.705,
+    "lng": 37.71,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 42,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 15,
+    "check_in_radius": 30,
+    "gold_reward": 25,
+    "xp_reward": 13
+  },
+  {
+    "id": 53,
+    "osm_id": "osm_54",
+    "name": "Сквер на Волгоградском",
+    "lat": 55.718,
+    "lng": 37.728,
+    "category": "park",
+    "vibe_tags": [
+      "#pavement",
+      "#asphalt"
+    ],
+    "base_rating": 40,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 14,
+    "check_in_radius": 30,
+    "gold_reward": 24,
+    "xp_reward": 12
+  },
+  {
+    "id": 54,
+    "osm_id": "osm_55",
+    "name": "Завод ЗИЛ (территория)",
+    "lat": 55.706,
+    "lng": 37.648,
+    "category": "other",
+    "vibe_tags": [
+      "#industrial",
+      "#abandoned",
+      "#factory",
+      "#graffiti",
+      "#urban_underground"
+    ],
+    "base_rating": 80,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "industrial"
+    },
+    "is_active": true,
+    "restore_hp": 28,
+    "check_in_radius": 30,
+    "gold_reward": 48,
+    "xp_reward": 24
+  },
+  {
+    "id": 55,
+    "osm_id": "osm_56",
+    "name": "Парк Артём Боровик",
+    "lat": 55.7,
+    "lng": 37.74,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley"
+    ],
+    "base_rating": 50,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 18,
+    "check_in_radius": 30,
+    "gold_reward": 30,
+    "xp_reward": 15
+  },
+  {
+    "id": 56,
+    "osm_id": "osm_57",
+    "name": "Парк Царицыно",
+    "lat": 55.615,
+    "lng": 37.682,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#embankment",
+      "#smooth_flow"
+    ],
+    "base_rating": 88,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 31,
+    "check_in_radius": 30,
+    "gold_reward": 53,
+    "xp_reward": 26
+  },
+  {
+    "id": 57,
+    "osm_id": "osm_58",
+    "name": "Музей Царицыно",
+    "lat": 55.612,
+    "lng": 37.685,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard",
+      "#square"
+    ],
+    "base_rating": 82,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "museum"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 49,
+    "xp_reward": 25
+  },
+  {
+    "id": 58,
+    "osm_id": "osm_59",
+    "name": "Коломенское",
+    "lat": 55.665,
+    "lng": 37.67,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#embankment"
+    ],
+    "base_rating": 86,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 30,
+    "check_in_radius": 30,
+    "gold_reward": 52,
+    "xp_reward": 26
+  },
+  {
+    "id": 59,
+    "osm_id": "osm_60",
+    "name": "Нагатинская пойма",
+    "lat": 55.678,
+    "lng": 37.652,
+    "category": "park",
+    "vibe_tags": [
+      "#embankment",
+      "#smooth_flow",
+      "#bridge"
+    ],
+    "base_rating": 62,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 22,
+    "check_in_radius": 30,
+    "gold_reward": 37,
+    "xp_reward": 19
+  },
+  {
+    "id": 60,
+    "osm_id": "osm_61",
+    "name": "Южный речной вокзал",
+    "lat": 55.677,
+    "lng": 37.643,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#panorama"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "building"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 61,
+    "osm_id": "osm_62",
+    "name": "Сквер у метро Кантемировская",
+    "lat": 55.635,
+    "lng": 37.655,
+    "category": "park",
+    "vibe_tags": [
+      "#pavement",
+      "#asphalt"
+    ],
+    "base_rating": 38,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 13,
+    "check_in_radius": 30,
+    "gold_reward": 23,
+    "xp_reward": 11
+  },
+  {
+    "id": 62,
+    "osm_id": "osm_63",
+    "name": "ТЦ Columbus",
+    "lat": 55.64,
+    "lng": 37.66,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 45,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 16,
+    "check_in_radius": 30,
+    "gold_reward": 27,
+    "xp_reward": 14
+  },
+  {
+    "id": 63,
+    "osm_id": "osm_64",
+    "name": "Велотрек Крылатское",
+    "lat": 55.675,
+    "lng": 37.62,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#smooth_flow"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 64,
+    "osm_id": "osm_65",
+    "name": "Воробьёвы горы (смотровая)",
+    "lat": 55.715,
+    "lng": 37.54,
+    "category": "view",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#bridge"
+    ],
+    "base_rating": 95,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "viewpoint"
+    },
+    "is_active": true,
+    "restore_hp": 33,
+    "check_in_radius": 30,
+    "gold_reward": 57,
+    "xp_reward": 29
+  },
+  {
+    "id": 65,
+    "osm_id": "osm_66",
+    "name": "Лужники",
+    "lat": 55.715,
+    "lng": 37.555,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 80,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "stadium"
+    },
+    "is_active": true,
+    "restore_hp": 28,
+    "check_in_radius": 30,
+    "gold_reward": 48,
+    "xp_reward": 24
+  },
+  {
+    "id": 66,
+    "osm_id": "osm_67",
+    "name": "Нескучный сад",
+    "lat": 55.718,
+    "lng": 37.585,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow",
+      "#courtyard"
+    ],
+    "base_rating": 76,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 46,
+    "xp_reward": 23
+  },
+  {
+    "id": 67,
+    "osm_id": "osm_68",
+    "name": "Андреевский мост",
+    "lat": 55.714,
+    "lng": 37.572,
+    "category": "view",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#bridge",
+      "#embankment",
+      "#night"
+    ],
+    "base_rating": 82,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "pedestrian"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 49,
+    "xp_reward": 25
+  },
+  {
+    "id": 68,
+    "osm_id": "osm_69",
+    "name": "ТЦ Метромолл",
+    "lat": 55.722,
+    "lng": 37.6,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 48,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 17,
+    "check_in_radius": 30,
+    "gold_reward": 29,
+    "xp_reward": 14
+  },
+  {
+    "id": 69,
+    "osm_id": "osm_70",
+    "name": "Парк 50-летия Октября",
+    "lat": 55.708,
+    "lng": 37.53,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 60,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 21,
+    "check_in_radius": 30,
+    "gold_reward": 36,
+    "xp_reward": 18
+  },
+  {
+    "id": 70,
+    "osm_id": "osm_71",
+    "name": "Университетская площадь",
+    "lat": 55.703,
+    "lng": 37.535,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#square",
+      "#pedestrian"
+    ],
+    "base_rating": 58,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 20,
+    "check_in_radius": 30,
+    "gold_reward": 35,
+    "xp_reward": 17
+  },
+  {
+    "id": 71,
+    "osm_id": "osm_72",
+    "name": "Спорткомплекс Лужники (малый)",
+    "lat": 55.718,
+    "lng": 37.548,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement"
+    ],
+    "base_rating": 65,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 39,
+    "xp_reward": 20
+  },
+  {
+    "id": 72,
+    "osm_id": "osm_73",
+    "name": "Парк Победы",
+    "lat": 55.73,
+    "lng": 37.515,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#square",
+      "#pedestrian"
+    ],
+    "base_rating": 86,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 30,
+    "check_in_radius": 30,
+    "gold_reward": 52,
+    "xp_reward": 26
+  },
+  {
+    "id": 73,
+    "osm_id": "osm_74",
+    "name": "Музей Победы",
+    "lat": 55.732,
+    "lng": 37.517,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#square"
+    ],
+    "base_rating": 84,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "museum"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 50,
+    "xp_reward": 25
+  },
+  {
+    "id": 74,
+    "osm_id": "osm_75",
+    "name": "Арка Победы",
+    "lat": 55.735,
+    "lng": 37.52,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#square",
+      "#night"
+    ],
+    "base_rating": 78,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "monument"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 47,
+    "xp_reward": 23
+  },
+  {
+    "id": 75,
+    "osm_id": "osm_76",
+    "name": "Крылатские холмы",
+    "lat": 55.76,
+    "lng": 37.42,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#smooth_flow"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 76,
+    "osm_id": "osm_77",
+    "name": "Серебряный Бор",
+    "lat": 55.782,
+    "lng": 37.42,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#smooth_flow",
+      "#dark_vibe"
+    ],
+    "base_rating": 80,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "beach"
+    },
+    "is_active": true,
+    "restore_hp": 28,
+    "check_in_radius": 30,
+    "gold_reward": 48,
+    "xp_reward": 24
+  },
+  {
+    "id": 77,
+    "osm_id": "osm_78",
+    "name": "Гребной канал",
+    "lat": 55.77,
+    "lng": 37.425,
+    "category": "sport",
+    "vibe_tags": [
+      "#embankment",
+      "#smooth_flow",
+      "#asphalt"
+    ],
+    "base_rating": 68,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 24,
+    "check_in_radius": 30,
+    "gold_reward": 41,
+    "xp_reward": 20
+  },
+  {
+    "id": 78,
+    "osm_id": "osm_79",
+    "name": "ТЦ Европейский",
+    "lat": 55.742,
+    "lng": 37.54,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 50,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 18,
+    "check_in_radius": 30,
+    "gold_reward": 30,
+    "xp_reward": 15
+  },
+  {
+    "id": 79,
+    "osm_id": "osm_80",
+    "name": "Сквер у метро Кутузовская",
+    "lat": 55.74,
+    "lng": 37.534,
+    "category": "park",
+    "vibe_tags": [
+      "#pavement",
+      "#asphalt"
+    ],
+    "base_rating": 42,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 15,
+    "check_in_radius": 30,
+    "gold_reward": 25,
+    "xp_reward": 13
+  },
+  {
+    "id": 80,
+    "osm_id": "osm_81",
+    "name": "Парк Тушино",
+    "lat": 55.828,
+    "lng": 37.445,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#smooth_flow"
+    ],
+    "base_rating": 68,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 24,
+    "check_in_radius": 30,
+    "gold_reward": 41,
+    "xp_reward": 20
+  },
+  {
+    "id": 81,
+    "osm_id": "osm_82",
+    "name": "Строгинский залив",
+    "lat": 55.805,
+    "lng": 37.42,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#view"
+    ],
+    "base_rating": 72,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 43,
+    "xp_reward": 22
+  },
+  {
+    "id": 82,
+    "osm_id": "osm_83",
+    "name": "Москва-Сити (смотровая)",
+    "lat": 55.75,
+    "lng": 37.54,
+    "category": "view",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama",
+      "#night"
+    ],
+    "base_rating": 90,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "viewpoint"
+    },
+    "is_active": true,
+    "restore_hp": 31,
+    "check_in_radius": 30,
+    "gold_reward": 54,
+    "xp_reward": 27
+  },
+  {
+    "id": 83,
+    "osm_id": "osm_84",
+    "name": "Парк Дружбы",
+    "lat": 55.836,
+    "lng": 37.488,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 64,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 22,
+    "check_in_radius": 30,
+    "gold_reward": 38,
+    "xp_reward": 19
+  },
+  {
+    "id": 84,
+    "osm_id": "osm_85",
+    "name": "Сквер на Сходненской",
+    "lat": 55.848,
+    "lng": 37.438,
+    "category": "park",
+    "vibe_tags": [
+      "#pavement",
+      "#asphalt"
+    ],
+    "base_rating": 45,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 16,
+    "check_in_radius": 30,
+    "gold_reward": 27,
+    "xp_reward": 14
+  },
+  {
+    "id": 85,
+    "osm_id": "osm_86",
+    "name": "ТЦ Калейдоскоп",
+    "lat": 55.81,
+    "lng": 37.472,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 44,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 15,
+    "check_in_radius": 30,
+    "gold_reward": 26,
+    "xp_reward": 13
+  },
+  {
+    "id": 86,
+    "osm_id": "osm_87",
+    "name": "Спорткомплекс Янтарь",
+    "lat": 55.82,
+    "lng": 37.438,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#smooth_flow"
+    ],
+    "base_rating": 55,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 19,
+    "check_in_radius": 30,
+    "gold_reward": 33,
+    "xp_reward": 17
+  },
+  {
+    "id": 87,
+    "osm_id": "osm_88",
+    "name": "Парк 40-летия Победы",
+    "lat": 55.985,
+    "lng": 37.195,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 62,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 22,
+    "check_in_radius": 30,
+    "gold_reward": 37,
+    "xp_reward": 19
+  },
+  {
+    "id": 88,
+    "osm_id": "osm_89",
+    "name": "Сквер у Дворца культуры",
+    "lat": 55.992,
+    "lng": 37.2,
+    "category": "park",
+    "vibe_tags": [
+      "#pavement",
+      "#square",
+      "#pedestrian"
+    ],
+    "base_rating": 50,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 18,
+    "check_in_radius": 30,
+    "gold_reward": 30,
+    "xp_reward": 15
+  },
+  {
+    "id": 89,
+    "osm_id": "osm_90",
+    "name": "Чёрное озеро",
+    "lat": 55.978,
+    "lng": 37.188,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#embankment",
+      "#dark_vibe"
+    ],
+    "base_rating": 66,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 40,
+    "xp_reward": 20
+  },
+  {
+    "id": 90,
+    "osm_id": "osm_91",
+    "name": "ТЦ Столица",
+    "lat": 55.99,
+    "lng": 37.21,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 38,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 13,
+    "check_in_radius": 30,
+    "gold_reward": 23,
+    "xp_reward": 11
+  },
+  {
+    "id": 91,
+    "osm_id": "osm_92",
+    "name": "Спорткомплекс Зеленоград",
+    "lat": 55.982,
+    "lng": 37.215,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement"
+    ],
+    "base_rating": 52,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 18,
+    "check_in_radius": 30,
+    "gold_reward": 31,
+    "xp_reward": 16
+  },
+  {
+    "id": 92,
+    "osm_id": "osm_93",
+    "name": "Кофе-бар Double B",
+    "lat": 55.76,
+    "lng": 37.626,
+    "category": "food",
+    "vibe_tags": [
+      "#urban_underground",
+      "#courtyard"
+    ],
+    "base_rating": 68,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cafe"
+    },
+    "is_active": true,
+    "restore_hp": 24,
+    "check_in_radius": 30,
+    "gold_reward": 41,
+    "xp_reward": 20
+  },
+  {
+    "id": 93,
+    "osm_id": "osm_94",
+    "name": "Ресторан «Сахалин»",
+    "lat": 55.7565,
+    "lng": 37.615,
+    "category": "food",
+    "vibe_tags": [
+      "#scenic",
+      "#night"
+    ],
+    "base_rating": 80,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "restaurant"
+    },
+    "is_active": true,
+    "restore_hp": 28,
+    "check_in_radius": 30,
+    "gold_reward": 48,
+    "xp_reward": 24
+  },
+  {
+    "id": 94,
+    "osm_id": "osm_95",
+    "name": "Пироги на Дмитровке",
+    "lat": 55.77,
+    "lng": 37.595,
+    "category": "food",
+    "vibe_tags": [
+      "#courtyard",
+      "#pavement"
+    ],
+    "base_rating": 55,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cafe"
+    },
+    "is_active": true,
+    "restore_hp": 19,
+    "check_in_radius": 30,
+    "gold_reward": 33,
+    "xp_reward": 17
+  },
+  {
+    "id": 95,
+    "osm_id": "osm_96",
+    "name": "Ватрушка (кафе)",
+    "lat": 55.7555,
+    "lng": 37.63,
+    "category": "food",
+    "vibe_tags": [
+      "#pedestrian",
+      "#alley"
+    ],
+    "base_rating": 58,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "cafe"
+    },
+    "is_active": true,
+    "restore_hp": 20,
+    "check_in_radius": 30,
+    "gold_reward": 35,
+    "xp_reward": 17
+  },
+  {
+    "id": 96,
+    "osm_id": "osm_97",
+    "name": "Третьяковская галерея",
+    "lat": 55.741,
+    "lng": 37.6205,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard"
+    ],
+    "base_rating": 92,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "museum"
+    },
+    "is_active": true,
+    "restore_hp": 32,
+    "check_in_radius": 30,
+    "gold_reward": 55,
+    "xp_reward": 28
+  },
+  {
+    "id": 97,
+    "osm_id": "osm_98",
+    "name": "Гараж (музей)",
+    "lat": 55.754,
+    "lng": 37.599,
+    "category": "culture",
+    "vibe_tags": [
+      "#urban_underground",
+      "#industrial",
+      "#graffiti"
+    ],
+    "base_rating": 78,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "museum"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 47,
+    "xp_reward": 23
+  },
+  {
+    "id": 98,
+    "osm_id": "osm_99",
+    "name": "Театр Наций",
+    "lat": 55.7575,
+    "lng": 37.619,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#courtyard"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "theatre"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 99,
+    "osm_id": "osm_100",
+    "name": "МХТ им. Чехова",
+    "lat": 55.761,
+    "lng": 37.615,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#pavement"
+    ],
+    "base_rating": 76,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "theatre"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 46,
+    "xp_reward": 23
+  },
+  {
+    "id": 100,
+    "osm_id": "osm_101",
+    "name": "СК Мегаспорт",
+    "lat": 55.772,
+    "lng": 37.542,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#pavement"
+    ],
+    "base_rating": 66,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "stadium"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 40,
+    "xp_reward": 20
+  },
+  {
+    "id": 101,
+    "osm_id": "osm_102",
+    "name": "Воробьёвы горы (трассы)",
+    "lat": 55.72,
+    "lng": 37.535,
+    "category": "sport",
+    "vibe_tags": [
+      "#scenic",
+      "#asphalt",
+      "#smooth_flow"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "track"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 102,
+    "osm_id": "osm_103",
+    "name": "Скейтпарк на Крылатском",
+    "lat": 55.762,
+    "lng": 37.425,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#smooth_flow",
+      "#graffiti"
+    ],
+    "base_rating": 82,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 49,
+    "xp_reward": 25
+  },
+  {
+    "id": 103,
+    "osm_id": "osm_104",
+    "name": "BMX-парк в Сокольниках",
+    "lat": 55.788,
+    "lng": 37.688,
+    "category": "sport",
+    "vibe_tags": [
+      "#asphalt",
+      "#smooth_flow"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "sports_centre"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 104,
+    "osm_id": "osm_105",
+    "name": "Смотровая на РАН",
+    "lat": 55.701,
+    "lng": 37.565,
+    "category": "view",
+    "vibe_tags": [
+      "#scenic",
+      "#view",
+      "#panorama"
+    ],
+    "base_rating": 78,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "viewpoint"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 47,
+    "xp_reward": 23
+  },
+  {
+    "id": 105,
+    "osm_id": "osm_106",
+    "name": "Александровский сад",
+    "lat": 55.7525,
+    "lng": 37.613,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley",
+      "#pedestrian"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "garden"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 106,
+    "osm_id": "osm_107",
+    "name": "Бульварное кольцо",
+    "lat": 55.762,
+    "lng": 37.62,
+    "category": "park",
+    "vibe_tags": [
+      "#pedestrian",
+      "#alley",
+      "#smooth_flow"
+    ],
+    "base_rating": 60,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "pedestrian"
+    },
+    "is_active": true,
+    "restore_hp": 21,
+    "check_in_radius": 30,
+    "gold_reward": 36,
+    "xp_reward": 18
+  },
+  {
+    "id": 107,
+    "osm_id": "osm_108",
+    "name": "Путевой дворец (сквер)",
+    "lat": 55.834,
+    "lng": 37.504,
+    "category": "park",
+    "vibe_tags": [
+      "#scenic",
+      "#alley"
+    ],
+    "base_rating": 56,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 20,
+    "check_in_radius": 30,
+    "gold_reward": 34,
+    "xp_reward": 17
+  },
+  {
+    "id": 108,
+    "osm_id": "osm_109",
+    "name": "ТЦ Метрополис",
+    "lat": 55.825,
+    "lng": 37.5,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 48,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 17,
+    "check_in_radius": 30,
+    "gold_reward": 29,
+    "xp_reward": 14
+  },
+  {
+    "id": 109,
+    "osm_id": "osm_110",
+    "name": "ТЦ Афимолл Сити",
+    "lat": 55.748,
+    "lng": 37.538,
+    "category": "shop",
+    "vibe_tags": [
+      "#pavement",
+      "#pedestrian"
+    ],
+    "base_rating": 52,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 18,
+    "check_in_radius": 30,
+    "gold_reward": 31,
+    "xp_reward": 16
+  },
+  {
+    "id": 110,
+    "osm_id": "osm_111",
+    "name": "ТЦ Охотный Ряд",
+    "lat": 55.756,
+    "lng": 37.614,
+    "category": "shop",
+    "vibe_tags": [
+      "#pedestrian",
+      "#square"
+    ],
+    "base_rating": 55,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "shop": "mall"
+    },
+    "is_active": true,
+    "restore_hp": 19,
+    "check_in_radius": 30,
+    "gold_reward": 33,
+    "xp_reward": 17
+  },
+  {
+    "id": 111,
+    "osm_id": "osm_112",
+    "name": "Туннель на Кутузовском",
+    "lat": 55.74,
+    "lng": 37.54,
+    "category": "other",
+    "vibe_tags": [
+      "#tunnel",
+      "#dark_vibe",
+      "#industrial",
+      "#night"
+    ],
+    "base_rating": 68,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "tunnel"
+    },
+    "is_active": true,
+    "restore_hp": 24,
+    "check_in_radius": 30,
+    "gold_reward": 41,
+    "xp_reward": 20
+  },
+  {
+    "id": 112,
+    "osm_id": "osm_113",
+    "name": "Арт-кластер Красный Октябрь",
+    "lat": 55.742,
+    "lng": 37.613,
+    "category": "culture",
+    "vibe_tags": [
+      "#urban_underground",
+      "#graffiti",
+      "#industrial",
+      "#embankment",
+      "#night"
+    ],
+    "base_rating": 84,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "attraction"
+    },
+    "is_active": true,
+    "restore_hp": 29,
+    "check_in_radius": 30,
+    "gold_reward": 50,
+    "xp_reward": 25
+  },
+  {
+    "id": 113,
+    "osm_id": "osm_114",
+    "name": "Депо (гастроцентр)",
+    "lat": 55.764,
+    "lng": 37.58,
+    "category": "food",
+    "vibe_tags": [
+      "#industrial",
+      "#urban_underground",
+      "#graffiti",
+      "#courtyard"
+    ],
+    "base_rating": 76,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "amenity": "restaurant"
+    },
+    "is_active": true,
+    "restore_hp": 27,
+    "check_in_radius": 30,
+    "gold_reward": 46,
+    "xp_reward": 23
+  },
+  {
+    "id": 114,
+    "osm_id": "osm_115",
+    "name": "Павелецкая набережная",
+    "lat": 55.73,
+    "lng": 37.64,
+    "category": "park",
+    "vibe_tags": [
+      "#embankment",
+      "#scenic",
+      "#smooth_flow",
+      "#pedestrian"
+    ],
+    "base_rating": 64,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "leisure": "park"
+    },
+    "is_active": true,
+    "restore_hp": 22,
+    "check_in_radius": 30,
+    "gold_reward": 38,
+    "xp_reward": 19
+  },
+  {
+    "id": 115,
+    "osm_id": "osm_116",
+    "name": "Китай-город (стены)",
+    "lat": 55.753,
+    "lng": 37.631,
+    "category": "culture",
+    "vibe_tags": [
+      "#scenic",
+      "#pedestrian",
+      "#alley"
+    ],
+    "base_rating": 66,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "monument"
+    },
+    "is_active": true,
+    "restore_hp": 23,
+    "check_in_radius": 30,
+    "gold_reward": 40,
+    "xp_reward": 20
+  },
+  {
+    "id": 116,
+    "osm_id": "osm_117",
+    "name": "Граффити на Бауманской",
+    "lat": 55.771,
+    "lng": 37.68,
+    "category": "culture",
+    "vibe_tags": [
+      "#graffiti",
+      "#urban_underground",
+      "#courtyard"
+    ],
+    "base_rating": 70,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "tourism": "artwork"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 42,
+    "xp_reward": 21
+  },
+  {
+    "id": 117,
+    "osm_id": "osm_118",
+    "name": "Заброшенная стройка на Мосфильмовской",
+    "lat": 55.725,
+    "lng": 37.505,
+    "category": "other",
+    "vibe_tags": [
+      "#abandoned",
+      "#dark_vibe",
+      "#industrial",
+      "#urban_underground"
+    ],
+    "base_rating": 72,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "historic": "industrial"
+    },
+    "is_active": true,
+    "restore_hp": 25,
+    "check_in_radius": 30,
+    "gold_reward": 43,
+    "xp_reward": 22
+  },
+  {
+    "id": 118,
+    "osm_id": "osm_119",
+    "name": "Ночной Арбат",
+    "lat": 55.748,
+    "lng": 37.59,
+    "category": "other",
+    "vibe_tags": [
+      "#night",
+      "#pedestrian",
+      "#scenic",
+      "#square"
+    ],
+    "base_rating": 74,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "pedestrian"
+    },
+    "is_active": true,
+    "restore_hp": 26,
+    "check_in_radius": 30,
+    "gold_reward": 44,
+    "xp_reward": 22
+  },
+  {
+    "id": 119,
+    "osm_id": "osm_120",
+    "name": "Переход на Киевской",
+    "lat": 55.742,
+    "lng": 37.564,
+    "category": "other",
+    "vibe_tags": [
+      "#tunnel",
+      "#urban_underground",
+      "#dark_vibe",
+      "#graffiti"
+    ],
+    "base_rating": 60,
+    "votes": {
+      "up": 0,
+      "down": 0
+    },
+    "voters": {},
+    "approved": true,
+    "suggested_by": null,
+    "tags": {
+      "highway": "pedestrian"
+    },
+    "is_active": true,
+    "restore_hp": 21,
+    "check_in_radius": 30,
+    "gold_reward": 36,
+    "xp_reward": 18
+  }
+]

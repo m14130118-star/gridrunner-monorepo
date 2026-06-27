@@ -1,0 +1,83 @@
+{
+  "nav": {"home": "Home", "profile": "Profile", "arena": "Arena", "admin": "B2B", "login": "Sign In", "logout": "Sign Out", "register": "Register", "news": "News"},
+  "landing": {
+    "title": "GridRunner", "subtitle": "Turn your walk into an adventure",
+    "desc": "Explore the city, earn rewards, compete with friends",
+    "download": "Download", "learn": "Learn More",
+    "modes": "Modes", "vip": "VIP Subscription",
+    "vip_desc": "Unlimited trips, car mode, golden achievements",
+    "vip_cta": "Get VIP",
+    "ios": "App Store", "android": "Google Play",
+    "about_title": "How it was built",
+    "about_desc": "GridRunner is a solo pet project — from idea to production: maps, route algorithms, music, gamification, and a B2B panel. All code written from scratch, no templates.",
+    "about_footer": "Built over a few months, solo."
+  },
+  "modes": {
+    "walk": {"name": "Walk", "speed": "≤12 km/h", "desc": "A relaxed pace — enjoy the views and discover new spots"},
+    "skate": {"name": "Skateboard", "speed": "≤25 km/h", "desc": "Drive and adrenaline for those who never stand still"},
+    "bike": {"name": "Bicycle", "speed": "≤45 km/h", "desc": "Speed and endurance — perfect for long distances"},
+    "car": {"name": "Car", "speed": "≤160 km/h", "desc": "Weekend road trips — explore far-off locations"}
+  },
+  "features": {
+    "scenic": {"title": "Scenic Routes", "desc": "AI picks picturesque paths"},
+    "music": {"title": "Mood Music", "desc": "Playlists for your style"},
+    "checkin": {"title": "Check-ins & Rewards", "desc": "Earn XP and gold"},
+    "leaderboard": {"title": "Leaderboards", "desc": "Compete for territories"}
+  },
+  "auth": {
+    "login_title": "Sign In", "register_title": "Register",
+    "email": "Email", "password": "Password", "username": "Username",
+    "preferences": "What do you like?",
+    "pref_desc": "Pick your interests — we'll build routes around them",
+    "prefs": {
+      "embankment": "Embankments", "sunset": "Sunsets", "bakery": "Bakeries",
+      "coffee": "Coffee", "park": "Parks", "history": "History",
+      "shopping": "Shopping", "nature": "Nature", "food": "Food"
+    },
+    "start": "Start adventure",
+    "demo_hint": "Any email + password (3+ chars)"
+  },
+  "trip": {
+    "new": "New Trip", "start": "Start", "finish": "Finish",
+    "how_long": "How long?", "places": "Where to stop?",
+    "music": "Route playlist", "route_ready": "Route is ready!",
+    "min": "min", "km": "km", "kmh": "km/h",
+    "duration_options": {"30": "30 min", "60": "1 hour", "90": "1.5 hours", "120": "2 hours", "180": "3 hours"},
+    "genres": {"chill": "Chill", "electronic": "Electronic", "rock": "Rock", "jazz": "Jazz", "pop": "Pop", "hiphop": "Hip-Hop"},
+    "distance": "Distance", "time": "Time", "speed": "Speed", "checkpoints": "Stops",
+    "completed": "Trip completed!",
+    "checkpoint_reached": "Checkpoint reached!",
+    "checkpoints_visited": "of checkpoints visited",
+    "select_places": "Select places for your route",
+    "build_route": "Build Route",
+    "places_selected": "selected",
+    "xp_per_cp": "XP per checkpoint"
+  },
+  "admin": {
+    "title": "B2B Panel", "desc": "Point management & analytics",
+    "today": "Check-ins Today", "week": "This Week", "month": "This Month",
+    "visitors": "Total Visitors", "unique": "Unique Players",
+    "hourly": "By Hour", "daily": "By Day", "new_point": "New Point",
+    "save": "Save", "saved": "Saved", "refresh": "Refresh",
+    "maps_ru": "Yandex Maps", "maps_en": "Google Maps"
+  },
+  "common": {"loading": "Loading...", "error": "Error", "success": "Success", "close": "Close", "next": "Next", "back": "Back"},
+  "onboarding": {
+    "welcome_title": "Welcome to GridRunner!",
+    "welcome_desc": "Turn your walk into an adventure. Pick your vibe — we'll build routes around your interests.",
+    "choose_vibe": "Choose your vibe",
+    "garage_title": "Garage: pick your ride",
+    "garage_desc": "Walk, skate, bike, or drive — each mode feels different and has its own speed.",
+    "open_garage": "Open garage",
+    "trip_title": "Start your first trip",
+    "trip_desc": "Tap 'New Trip', pick a route, and head out to explore the city. Hit start!",
+    "start_trip": "Start a trip",
+    "profile_title": "Explore & level up",
+    "profile_desc": "Track your progress, earn achievements, collect XP and gold. Every trip levels you up.",
+    "view_profile": "My profile",
+    "leaderboard_title": "Join the community",
+    "leaderboard_desc": "Compete with other players, capture territories, and climb the leaderboard.",
+    "join_community": "Leaderboard",
+    "lets_go": "Let's go!"
+  }
+}

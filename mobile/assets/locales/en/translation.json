@@ -1,0 +1,56 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "switch_to_register": "No account? Register",
+    "switch_to_login": "Already have an account? Login",
+    "error": "Error"
+  },
+  "onboarding": {
+    "language_title": "Choose Language",
+    "language_description": "Please select your language",
+    "tutorial_title": "How to Play",
+    "tutorial_step1": "Move around the city",
+    "tutorial_step2": "Visit checkpoints",
+    "tutorial_step3": "Earn rewards",
+    "interests_title": "Your Interests",
+    "interests_description": "Select what you like",
+    "next": "Next",
+    "skip": "Skip"
+  },
+  "trip": {
+    "title": "Trip",
+    "speed": "Speed",
+    "hp": "HP",
+    "fuel": "Fuel",
+    "level": "Level",
+    "check_in": "Check-in",
+    "generate_route": "Generate Route",
+    "check_in_success": "Success!",
+    "earned": "You earned {{gold}} gold and {{xp}} XP"
+  },
+  "garage": {
+    "title": "Garage",
+    "feet": "Feet",
+    "skateboard": "Skateboard",
+    "bicycle": "Bicycle",
+    "car": "Car",
+    "level": "Level",
+    "vip_required": "VIP required",
+    "start_trip": "Start Trip"
+  },
+  "profile": {
+    "title": "Profile",
+    "level": "Level",
+    "xp": "XP",
+    "balance": "Gold",
+    "checkpoints": "Checkpoints",
+    "achievements": "Achievements",
+    "no_achievements": "No achievements yet",
+    "logout": "Logout",
+    "error": "Failed to load profile",
+    "logout_success": "You have been logged out"
+  }
+}

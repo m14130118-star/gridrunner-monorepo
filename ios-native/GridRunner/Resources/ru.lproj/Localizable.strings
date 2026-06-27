@@ -1,0 +1,10 @@
+"login" = "Вход";
+"register" = "Регистрация";
+"email" = "Email";
+"password" = "Пароль";
+"username" = "Имя пользователя";
+"no_account" = "Нет аккаунта? Зарегистрироваться";
+"have_account" = "Уже есть аккаунт? Войти";
+"check_in" = "Чек-ин";
+"check_in_success" = "Успех!";
+"earned" = "Вы заработали %d золота и %d XP!";

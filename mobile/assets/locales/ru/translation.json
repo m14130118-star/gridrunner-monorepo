@@ -1,0 +1,56 @@
+{
+  "auth": {
+    "login": "Вход",
+    "register": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "switch_to_register": "Нет аккаунта? Зарегистрироваться",
+    "switch_to_login": "Уже есть аккаунт? Войти",
+    "error": "Ошибка"
+  },
+  "onboarding": {
+    "language_title": "Выберите язык",
+    "language_description": "Пожалуйста, выберите язык",
+    "tutorial_title": "Как играть",
+    "tutorial_step1": "Двигайтесь по городу",
+    "tutorial_step2": "Посещайте чекпоинты",
+    "tutorial_step3": "Зарабатывайте награды",
+    "interests_title": "Ваши интересы",
+    "interests_description": "Выберите, что вам нравится",
+    "next": "Далее",
+    "skip": "Пропустить"
+  },
+  "trip": {
+    "title": "Поездка",
+    "speed": "Скорость",
+    "hp": "Здоровье",
+    "fuel": "Топливо",
+    "level": "Уровень",
+    "check_in": "Чек-ин",
+    "generate_route": "Сгенерировать маршрут",
+    "check_in_success": "Успех!",
+    "earned": "Вы заработали {{gold}} золота и {{xp}} XP"
+  },
+  "garage": {
+    "title": "Гараж",
+    "feet": "Ноги",
+    "skateboard": "Скейтборд",
+    "bicycle": "Велосипед",
+    "car": "Машина",
+    "level": "Уровень",
+    "vip_required": "Требуется VIP-статус",
+    "start_trip": "Начать поездку"
+  },
+  "profile": {
+    "title": "Профиль",
+    "level": "Уровень",
+    "xp": "XP",
+    "balance": "Золото",
+    "checkpoints": "Чекпоинты",
+    "achievements": "Достижения",
+    "no_achievements": "Пока нет достижений",
+    "logout": "Выйти",
+    "error": "Не удалось загрузить профиль",
+    "logout_success": "Вы вышли из аккаунта"
+  }
+}

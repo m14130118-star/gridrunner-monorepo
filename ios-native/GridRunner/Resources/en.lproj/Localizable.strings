@@ -1,0 +1,10 @@
+"login" = "Login";
+"register" = "Register";
+"email" = "Email";
+"password" = "Password";
+"username" = "Username";
+"no_account" = "No account? Register";
+"have_account" = "Already have an account? Login";
+"check_in" = "Check-In";
+"check_in_success" = "Success!";
+"earned" = "You earned %d gold and %d XP!";

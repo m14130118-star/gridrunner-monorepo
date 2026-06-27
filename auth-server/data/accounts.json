@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1782449215139,
+    "username": "testuser",
+    "email": "test@test.com",
+    "password_hash": "$2a$10$ULtMx58PL4i1WZIAUEfFF.GPuFr5rVA6hBNFWMetd/xVgFm4pFUgi",
+    "role": "player"
+  }
+]

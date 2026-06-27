@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GridRunner</string>
+    <string name="title_activity_main">GridRunner</string>
+    <string name="package_name">ai.gridrunner.app</string>
+    <string name="custom_url_scheme">ai.gridrunner.app</string>
+</resources>

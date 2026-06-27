@@ -1,0 +1,91 @@
+[
+  {
+    "id": "ach_asphalt",
+    "title": "Асфальтовая болезнь",
+    "desc": "Накатать 50 км на скейте",
+    "icon": "skate",
+    "condition": {
+      "type": "distance",
+      "vehicle": "skateboard",
+      "target": 50
+    },
+    "reward": {
+      "type": "texture",
+      "id": "skate_worn"
+    }
+  },
+  {
+    "id": "ach_coffee",
+    "title": "Кофеиновый овердоз",
+    "desc": "Чекины в 30 уникальных POI (food)",
+    "icon": "coffee",
+    "condition": {
+      "type": "checkins",
+      "category": "food",
+      "target": 30
+    },
+    "reward": {
+      "type": "modifier",
+      "hp_bonus": 5,
+      "fuel_bonus": 5
+    }
+  },
+  {
+    "id": "ach_midnight",
+    "title": "Король Полуночи",
+    "desc": "Трип 5+ км между 00:00-04:00",
+    "icon": "moon",
+    "condition": {
+      "type": "night_trip",
+      "min_km": 5
+    },
+    "reward": {
+      "type": "cosmetic",
+      "id": "neon_underglow"
+    }
+  },
+  {
+    "id": "ach_ghost",
+    "title": "Призрачный Гонщик",
+    "desc": "200 км на машине в ночном режиме (VIP)",
+    "icon": "car",
+    "condition": {
+      "type": "distance",
+      "vehicle": "car",
+      "target": 200,
+      "vip": true
+    },
+    "reward": {
+      "type": "cosmetic",
+      "id": "ghost_skin"
+    }
+  },
+  {
+    "id": "ach_partisan",
+    "title": "Партизан ИРЛ",
+    "desc": "Пережить 15 вражеских ловушек на Арене",
+    "icon": "skull",
+    "condition": {
+      "type": "traps_survived",
+      "target": 15
+    },
+    "reward": {
+      "type": "badge",
+      "id": "sapper"
+    }
+  },
+  {
+    "id": "ach_district",
+    "title": "Гроза Района",
+    "desc": "Участвовать в 10 захватах районов",
+    "icon": "flag",
+    "condition": {
+      "type": "captures",
+      "target": 10
+    },
+    "reward": {
+      "type": "badge",
+      "id": "storm"
+    }
+  }
+]
