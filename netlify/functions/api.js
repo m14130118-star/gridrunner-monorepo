@@ -8,7 +8,7 @@ if (!fs.existsSync(DIR)) fs.mkdirSync(DIR, { recursive: true });
 
 // Seed from bundled JS module (forces bundler inclusion)
 try {
-  const seed = require('./seed');
+  const seed = require('./lib/seed');
   for (const [key, data] of Object.entries(seed)) {
     const p = path.join(DIR, key + '.json');
     if (!fs.existsSync(p)) fs.writeFileSync(p, JSON.stringify(data, null, 2));
