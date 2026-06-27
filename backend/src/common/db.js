@@ -1,8 +1,29 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, '..', '..', 'data');
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', '..', 'data');
+try {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+} catch (e) {
+  console.error('Cannot create DATA_DIR:', DATA_DIR, e.message);
+}
+
+// Seed default data files if missing
+const SEED_DIR = path.join(__dirname, '..', '..', 'data');
+const SEED_FILES = ['accounts.json', 'achievement_defs.json', 'achievements.json', 'checkpoints.json', 'checkins.json', 'districts.json', 'locations.json', 'pois.json', 'quests.json', 'vehicles.json'];
+try {
+  if (fs.existsSync(SEED_DIR) && DATA_DIR !== SEED_DIR) {
+    for (const f of SEED_FILES) {
+      const src = path.join(SEED_DIR, f);
+      const dst = path.join(DATA_DIR, f);
+      if (fs.existsSync(src) && !fs.existsSync(dst)) {
+        fs.copyFileSync(src, dst);
+      }
+    }
+  }
+} catch (e) {
+  console.error('Seed copy error:', e.message);
+}
 
 function load(collection) {
   const file = path.join(DATA_DIR, `${collection}.json`);

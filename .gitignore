@@ -1,4 +1,5 @@
 node_modules/
+.netlify/
 web/web-game/out/
 web/web-game/.next/
 web/web-game/android/.gradle/
