@@ -3,36 +3,29 @@ process.env.DATA_DIR = '/tmp/data';
 const fs = require('fs');
 const path = require('path');
 
+// Seed data files using require() so the bundler includes them
+const DATA_SRC = path.join(__dirname, 'data');
+const FILES = ['achievement_defs.json', 'districts.json', 'pois.json', 'vehicles.json'];
+
 const DIR = '/tmp/data';
 if (!fs.existsSync(DIR)) fs.mkdirSync(DIR, { recursive: true });
 
-// Seed from bundled data files inside the function directory
-const DATA_SRC = path.join(__dirname, 'data');
-const FILES = ['accounts.json','achievement_defs.json','achievements.json','checkpoints.json','checkins.json','districts.json','locations.json','pois.json','quests.json','vehicles.json'];
-if (fs.existsSync(DATA_SRC)) {
-  for (const f of FILES) {
+for (const f of FILES) {
+  const dst = path.join(DIR, f);
+  if (!fs.existsSync(dst)) {
     const src = path.join(DATA_SRC, f);
-    const dst = path.join(DIR, f);
-    if (fs.existsSync(src) && !fs.existsSync(dst)) {
-      fs.copyFileSync(src, dst);
+    try {
+      const data = require(src);
+      fs.writeFileSync(dst, JSON.stringify(data, null, 2));
+    } catch {
+      fs.writeFileSync(dst, '[]');
     }
   }
-} else {
-  // Fallback: try to require from backend/data
-  try {
-    const fallback = path.join(__dirname, '..', '..', 'backend', 'data');
-    if (fs.existsSync(fallback)) {
-      for (const f of FILES) {
-        const src = path.join(fallback, f);
-        const dst = path.join(DIR, f);
-        if (fs.existsSync(src) && !fs.existsSync(dst)) fs.copyFileSync(src, dst);
-      }
-    }
-  } catch {}
 }
 
-// Ensure empty data files exist for collections not yet created
-for (const f of FILES) {
+// Ensure mutable data files exist as empty arrays
+const MUTABLE = ['accounts.json', 'achievements.json', 'checkpoints.json', 'checkins.json', 'locations.json', 'quests.json'];
+for (const f of MUTABLE) {
   const p = path.join(DIR, f);
   if (!fs.existsSync(p)) fs.writeFileSync(p, '[]');
 }
