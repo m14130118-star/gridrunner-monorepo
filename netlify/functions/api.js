@@ -3,24 +3,18 @@ process.env.DATA_DIR = '/tmp/data';
 const fs = require('fs');
 const path = require('path');
 
-// Seed data files using require() so the bundler includes them
-const DATA_SRC = path.join(__dirname, 'data');
-const FILES = ['achievement_defs.json', 'districts.json', 'pois.json', 'vehicles.json'];
-
 const DIR = '/tmp/data';
 if (!fs.existsSync(DIR)) fs.mkdirSync(DIR, { recursive: true });
 
-for (const f of FILES) {
-  const dst = path.join(DIR, f);
-  if (!fs.existsSync(dst)) {
-    const src = path.join(DATA_SRC, f);
-    try {
-      const data = require(src);
-      fs.writeFileSync(dst, JSON.stringify(data, null, 2));
-    } catch {
-      fs.writeFileSync(dst, '[]');
-    }
+// Seed from bundled JS module (forces bundler inclusion)
+try {
+  const seed = require('./seed');
+  for (const [key, data] of Object.entries(seed)) {
+    const p = path.join(DIR, key + '.json');
+    if (!fs.existsSync(p)) fs.writeFileSync(p, JSON.stringify(data, null, 2));
   }
+} catch (e) {
+  console.error('Seed error:', e.message);
 }
 
 // Ensure mutable data files exist as empty arrays
