@@ -21,20 +21,13 @@ function haversineKm(a: [number, number], b: [number, number]) {
 }
 
 interface Waypoint {
-  id: number;
-  name: string;
-  lat: number;
-  lng: number;
-  score: number;
-  vibe_tags?: string[];
+  id: number; name: string; lat: number; lng: number;
+  score: number; vibe_tags?: string[];
 }
 
 interface TripData {
-  waypoints: Waypoint[];
-  finish: Waypoint | null;
-  totalScore: number;
-  transport: string;
-  userVibes: string[];
+  waypoints: Waypoint[]; finish: Waypoint | null;
+  totalScore: number; transport: string; userVibes: string[];
 }
 
 export default function ActiveTrip() {
@@ -47,6 +40,7 @@ export default function ActiveTrip() {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [tripTime, setTripTime] = useState(0);
   const [tripDist, setTripDist] = useState(0);
+  const [currentSpeed, setCurrentSpeed] = useState(0);
   const [earnedXp, setEarnedXp] = useState(0);
   const [earnedGold, setEarnedGold] = useState(0);
   const [noGps, setNoGps] = useState(false);
@@ -54,7 +48,6 @@ export default function ActiveTrip() {
   const [statusMsg, setStatusMsg] = useState('');
   const [token, setToken] = useState<string | null>(null);
   const [vehicleId, setVehicleId] = useState('feet');
-  const [lastBackendSync, setLastBackendSync] = useState(0);
 
   const [tripData, setTripData] = useState<TripData | null>(null);
   const [visitedWp, setVisitedWp] = useState<Set<number>>(new Set());
@@ -65,7 +58,9 @@ export default function ActiveTrip() {
 
   const watchRef = useRef<number | null>(null);
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const syncRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const totalWp = (tripData?.waypoints.length || 0) + (tripData?.finish ? 1 : 0);
+  const visitedCount = visitedWp.size;
 
   useEffect(() => {
     const tok = localStorage.getItem('gridrunner_token');
@@ -126,18 +121,6 @@ export default function ActiveTrip() {
       if (dist <= 0.05) {
         setJustCheckedIn(-1);
         setVisitedWp(prev => new Set(prev).add(-1));
-        if (token) {
-          fetch(getApiUrl() + '/api/v1/player/check-in', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ checkpoint_id: tripData.finish.id, latitude: pos[0], longitude: pos[1] }),
-          }).then(r => r.json()).then(data => {
-            if (data.success) {
-              setEarnedXp(prev => prev + data.reward.xp);
-              setEarnedGold(prev => prev + data.reward.gold);
-            }
-          }).catch(() => {});
-        }
         setTimeout(() => setJustCheckedIn(null), 2000);
       }
     }
@@ -153,12 +136,16 @@ export default function ActiveTrip() {
       (pos) => {
         const p: [number, number] = [pos.coords.latitude, pos.coords.longitude];
         setCurrentPos(p);
+        setCurrentSpeed(pos.coords.speed !== null ? pos.coords.speed * 3.6 : 0);
         checkWaypointProximity(p);
         setPath(prev => {
           const last = prev[prev.length - 1];
           const d = haversineKm(last, p);
-          setTripDist(prevDist => Number((prevDist + d).toFixed(3)));
-          return [...prev, p];
+          if (d > 0.001) {
+            setTripDist(prevDist => Number((prevDist + d).toFixed(3)));
+            return [...prev, p];
+          }
+          return prev;
         });
       },
       () => {},
@@ -168,30 +155,11 @@ export default function ActiveTrip() {
     tickRef.current = setInterval(() => {
       setTripTime(prev => prev + 1);
     }, 1000);
-
-    syncRef.current = setInterval(() => {
-      setCurrentPos(pos => {
-        if (!pos || !token) return pos;
-        fetch(getApiUrl() + '/api/v1/player/location/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify({ latitude: pos[0], longitude: pos[1], vehicle_id: vehicleId, isArenaMode: false }),
-        }).then(r => r.json()).then(data => {
-          if (data.success) {
-            setEarnedXp(prev => prev + data.xp_earned);
-            setEarnedGold(prev => prev + data.gold_earned);
-            setLastBackendSync(Date.now());
-          }
-        }).catch(() => {});
-        return pos;
-      });
-    }, 10000);
   };
 
   const endTrip = async () => {
     if (watchRef.current !== null) navigator.geolocation.clearWatch(watchRef.current);
     if (tickRef.current !== null) clearInterval(tickRef.current);
-    if (syncRef.current !== null) clearInterval(syncRef.current);
     setTracking(false);
 
     if (tripDist < 0.1 || !token) {
@@ -202,16 +170,12 @@ export default function ActiveTrip() {
 
     setSubmitting(true);
     try {
-      const totalWp = (tripData?.waypoints.length || 0) + (tripData?.finish ? 1 : 0);
-      const visitedCount = visitedWp.size;
       const r = await fetch(getApiUrl() + '/api/v1/player/trip/complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
-          distance: tripDist,
-          duration: tripTime,
-          waypoints_total: totalWp,
-          waypoints_visited: visitedCount,
+          distance: tripDist, duration: tripTime,
+          waypoints_total: totalWp, waypoints_visited: visitedCount,
           transport: vehicleId,
         }),
       });
@@ -225,9 +189,7 @@ export default function ActiveTrip() {
         stored.gold = (stored.gold || 0) + data.totalGold;
         stored.totalDistance = (stored.totalDistance || 0) + tripDist;
         stored.totalTrips = (stored.totalTrips || 0) + 1;
-        if (data.levelUp) {
-          stored.level = data.newLevel;
-        }
+        if (data.levelUp) stored.level = data.newLevel;
         localStorage.setItem('gridrunner_user', JSON.stringify(stored));
       }
     } catch {}
@@ -236,10 +198,13 @@ export default function ActiveTrip() {
     setStatusMsg(lang === 'ru' ? 'Трип завершён!' : 'Trip completed!');
   };
 
+  const avgSpeed = tripTime > 0 ? (tripDist / (tripTime / 3600)) : 0;
+  const displaySpeed = currentSpeed > 0 ? currentSpeed : avgSpeed;
+
   if (noGps) {
     return (
       <div className="page page-center" style={{ textAlign: 'center', flexDirection: 'column', gap: 16 }}>
-        <div style={{ fontSize: 48, opacity: 0.3 }}><i className="fa-solid fa-location-crosshairs"></i></div>
+        <i className="fa-solid fa-location-crosshairs" style={{ fontSize: 48, opacity: 0.3 }}></i>
         <p style={{ opacity: 0.5 }}>{lang === 'ru' ? 'Нет доступа к GPS' : 'No GPS access'}</p>
         <button onClick={() => router.push('/profile')} className="btn btn-secondary">{t('common.close')}</button>
       </div>
@@ -249,8 +214,10 @@ export default function ActiveTrip() {
   if (finished) {
     return (
       <div className="page" style={{ textAlign: 'center', paddingTop: 80 }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>
-          {tripDist > 0.1 ? <i className="fa-solid fa-check-circle" style={{ color: '#00e676' }}></i> : <i className="fa-solid fa-circle-exclamation" style={{ color: '#ff1744' }}></i>}
+        <div style={{ fontSize: 64, marginBottom: 16 }}>
+          {tripDist > 0.1
+            ? <i className="fa-solid fa-circle-check" style={{ color: '#00e676' }}></i>
+            : <i className="fa-solid fa-circle-exclamation" style={{ color: '#ff1744' }}></i>}
         </div>
         <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>{statusMsg}</h2>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
@@ -327,69 +294,69 @@ export default function ActiveTrip() {
     );
   }
 
-  const avgSpeed = tripTime > 0 ? (tripDist / (tripTime / 3600)) : 0;
-  const totalWp = (tripData?.waypoints.length || 0) + (tripData?.finish ? 1 : 0);
-
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 50,
-      background: '#0a0f0d', color: '#e0f0e0',
-      display: 'flex', flexDirection: 'column',
-    }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', fontSize: 11, opacity: 0.5, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <span><i className="fa-solid fa-satellite"></i> {visitedWp.size}/{totalWp} {lang === 'ru' ? 'чек' : 'wp'}</span>
-        <span>{formatTime(tripTime)}</span>
-        <span style={{ color: lastBackendSync > Date.now() - 15000 ? '#00e676' : '#ff9100' }}>
-          <i className="fa-solid fa-cloud"></i> {lastBackendSync > Date.now() - 15000 ? 'OK' : '...'}
-        </span>
-      </div>
-
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-        <TripMap path={path} waypoints={tripData?.waypoints || []} finish={tripData?.finish || undefined} />
-        <div style={{
-          position: 'absolute', top: 10, left: 10, right: 10,
-          display: 'flex', justifyContent: 'space-between', pointerEvents: 'none',
-        }}>
-          <div style={{
-            background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)',
-            borderRadius: 10, padding: '6px 12px',
-          }}>
-            <div style={{ fontSize: 10, opacity: 0.5 }}>КМ/Ч</div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: '#00e676', fontVariantNumeric: 'tabular-nums' }}>
-              {avgSpeed.toFixed(1)}
-            </div>
-          </div>
-          <div style={{
-            background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)',
-            borderRadius: 10, padding: '6px 12px', textAlign: 'right',
-          }}>
-            <div style={{ fontSize: 10, opacity: 0.5 }}>{formatTime(tripTime)}</div>
-            <div style={{ fontSize: 13, fontWeight: 600 }}>{tripDist.toFixed(2)} км</div>
-          </div>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: '#0a0f0d', color: '#e0f0e0', display: 'flex', flexDirection: 'column' }}>
+      {/* Speedometer bar top */}
+      <div style={{
+        position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 100,
+        background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)',
+        borderRadius: 16, padding: '12px 28px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        border: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: '0 4px 30px rgba(0,0,0,0.5)',
+      }}>
+        <div style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          {lang === 'ru' ? 'Текущая скорость' : 'Current speed'}
         </div>
-        <div style={{
-          position: 'absolute', bottom: 10, left: 10, right: 10,
-          display: 'flex', gap: 8, pointerEvents: 'none',
-        }}>
-          <div style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)', borderRadius: 10, padding: '5px 10px', fontSize: 11 }}>
-            +{earnedXp} XP
-          </div>
-          <div style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)', borderRadius: 10, padding: '5px 10px', fontSize: 11 }}>
-            +{earnedGold} G
-          </div>
-          <div style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)', borderRadius: 10, padding: '5px 10px', fontSize: 11,
-            color: lastBackendSync > Date.now() - 15000 ? '#00e676' : '#ff9100' }}>
-            <i className="fa-solid fa-cloud"></i>
-          </div>
+        <div style={{ fontSize: 38, fontWeight: 800, color: '#00ff66', fontVariantNumeric: 'tabular-nums', lineHeight: 1.2 }}>
+          {displaySpeed.toFixed(1)}
+          <span style={{ fontSize: 16, color: '#fff', fontWeight: 400, marginLeft: 4 }}>км/ч</span>
+        </div>
+        <div style={{ fontSize: 10, color: '#666', marginTop: 4, display: 'flex', gap: 16 }}>
+          <span>{tripDist.toFixed(2)} км</span>
+          <span>{formatTime(tripTime)}</span>
+          <span>{visitedCount}/{totalWp} {lang === 'ru' ? 'чек' : 'wp'}</span>
         </div>
       </div>
 
-      {tripData && tripData.waypoints.length > 0 && (
+      {/* Map */}
+      <div style={{ flex: 1, position: 'relative' }}>
+        <TripMap path={path} waypoints={tripData?.waypoints || []} finish={tripData?.finish || undefined} currentPos={currentPos} />
+      </div>
+
+      {/* Checkin overlay */}
+      {justCheckedIn !== null && (
         <div style={{
-          maxHeight: 180, overflowY: 'auto', borderTop: '1px solid rgba(255,255,255,0.05)',
-          padding: '8px 12px', display: 'flex', flexDirection: 'column', gap: 4,
+          position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 200,
+          background: 'rgba(0,230,118,0.15)', backdropFilter: 'blur(12px)',
+          borderRadius: 16, padding: '20px 28px', textAlign: 'center',
+          border: '1px solid rgba(0,230,118,0.3)',
+          animation: 'fadeInOut 2s ease-in-out',
         }}>
-          {tripData.waypoints.map((wp, i) => {
+          <div style={{ fontSize: 32, marginBottom: 8 }}>
+            {justCheckedIn === -1
+              ? <span style={{ fontSize: 40 }}>🏁</span>
+              : <i className="fa-solid fa-location-dot" style={{ color: '#00e676' }}></i>}
+          </div>
+          <div style={{ fontWeight: 700, fontSize: 16, color: '#00e676' }}>
+            {justCheckedIn === -1
+              ? (lang === 'ru' ? 'Финиш!' : 'Finish!')
+              : (lang === 'ru' ? 'Чекин!' : 'Check-in!')}
+          </div>
+          <div style={{ fontSize: 12, opacity: 0.6, marginTop: 4 }}>+25 XP</div>
+        </div>
+      )}
+
+      {/* Waypoint list + End trip */}
+      <div style={{
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)',
+      }}>
+        <div style={{
+          maxHeight: 120, overflowY: 'auto', padding: '8px 12px',
+          display: 'flex', flexDirection: 'column', gap: 4,
+        }}>
+          {tripData?.waypoints.map((wp, i) => {
             const done = visitedWp.has(wp.id);
             return (
               <div key={wp.id} style={{
@@ -399,9 +366,12 @@ export default function ActiveTrip() {
                 borderLeft: `3px solid ${done ? '#00e676' : '#7c3aed'}`,
                 fontSize: 12, opacity: done ? 0.7 : 1,
               }}>
-                <div style={{ width: 22, height: 22, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                <div style={{
+                  width: 22, height: 22, borderRadius: '50%', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center',
                   background: done ? 'rgba(0,230,118,0.2)' : 'rgba(124,58,237,0.2)',
-                  color: done ? '#00e676' : '#7c3aed', fontWeight: 700, fontSize: 10 }}>
+                  color: done ? '#00e676' : '#7c3aed', fontWeight: 700, fontSize: 10,
+                }}>
                   {done ? <i className="fa-solid fa-check"></i> : i + 1}
                 </div>
                 <span style={{ flex: 1 }}>{wp.name}</span>
@@ -411,7 +381,7 @@ export default function ActiveTrip() {
               </div>
             );
           })}
-          {tripData.finish && (
+          {tripData?.finish && (
             <div style={{
               display: 'flex', alignItems: 'center', gap: 8,
               padding: '6px 10px', borderRadius: 8,
@@ -427,35 +397,17 @@ export default function ActiveTrip() {
             </div>
           )}
         </div>
-      )}
-
-      {justCheckedIn !== null && (
-        <div style={{
-          position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 100,
-          background: 'rgba(0,230,118,0.15)', backdropFilter: 'blur(12px)',
-          borderRadius: 16, padding: '20px 28px', textAlign: 'center',
-          border: '1px solid rgba(0,230,118,0.3)', animation: 'fadeInOut 2s ease-in-out',
-        }}>
-          <div style={{ fontSize: 32, marginBottom: 8 }}><i className="fa-solid fa-flag-checkered" style={{ color: '#00e676' }}></i></div>
-          <div style={{ fontWeight: 700, fontSize: 16, color: '#00e676' }}>
-            {justCheckedIn === -1
-              ? (lang === 'ru' ? 'Финиш!' : 'Finish!')
-              : (lang === 'ru' ? 'Чекин!' : 'Check-in!')}
-          </div>
-          <div style={{ fontSize: 12, opacity: 0.6, marginTop: 4 }}>
-            +25 XP / +50 G
-          </div>
+        <div style={{ padding: '8px 16px 16px' }}>
+          <button onClick={endTrip} style={{
+            width: '100%', padding: '14px 0', borderRadius: 12, fontWeight: 700, fontSize: 14,
+            background: 'rgba(255,50,50,0.12)', border: '1px solid rgba(255,50,50,0.25)',
+            color: '#ff5050', cursor: 'pointer', transition: 'all 0.2s',
+          }}
+            onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,50,50,0.2)')}
+            onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,50,50,0.12)')}>
+            <i className="fa-solid fa-stop"></i> {lang === 'ru' ? 'Завершить трип' : 'End trip'}
+          </button>
         </div>
-      )}
-
-      <div style={{ padding: '10px 16px' }}>
-        <button onClick={endTrip} style={{
-          width: '100%', padding: '16px 0', borderRadius: 14, fontWeight: 700, fontSize: 15,
-          background: 'rgba(255,50,50,0.12)', border: '1px solid rgba(255,50,50,0.25)',
-          color: '#ff5050', cursor: 'pointer',
-        }}>
-          <i className="fa-solid fa-stop"></i> {lang === 'ru' ? 'Завершить трип' : 'End trip'}
-        </button>
       </div>
 
       <style>{`@keyframes fadeInOut { 0%{opacity:0;transform:translate(-50%,-50%) scale(0.8)} 15%{opacity:1;transform:translate(-50%,-50%) scale(1)} 85%{opacity:1;transform:translate(-50%,-50%) scale(1)} 100%{opacity:0;transform:translate(-50%,-50%) scale(0.8)} }`}</style>

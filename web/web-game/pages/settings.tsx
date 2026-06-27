@@ -87,18 +87,6 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        {/* Server (mobile) */}
-        <section className="settings-section">
-          <h2><i className="fa-solid fa-server"></i> {lang === 'ru' ? 'Сервер' : 'Server'}</h2>
-          <p style={{ fontSize: 12, opacity: 0.4, marginBottom: 8 }}>
-            {lang === 'ru' ? 'Укажи адрес сервера (если не localhost)' : 'Set server address (if not localhost)'}
-          </p>
-          <input type="text" value={serverUrl} onChange={e => { setServerUrl(e.target.value); setApiUrl(e.target.value); }}
-            placeholder="http://192.168.1.100:3003"
-            style={{ fontSize: 13, padding: '10px 12px' }}
-          />
-        </section>
-
         {/* Account */}
         <section className="settings-section" style={{ padding: 0, overflow: 'hidden' }}>
           {isAuthenticated ? (
