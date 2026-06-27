@@ -1,0 +1,47 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'web/web-game/**'
+      - 'web/web-game/android/**'
+      - '.github/workflows/build-apk.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web/web-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/web-game/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Build web
+        run: npm run build
+      - name: Copy web to Android
+        run: npx cap copy android
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Build APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: gridrunner-apk
+          path: web/web-game/android/app/build/outputs/apk/debug/*.apk

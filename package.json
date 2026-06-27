@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "cd backend && npm install && cd ../web/web-game && npm install",
-    "build": "cd backend && npm install && cd ../web/web-game && npm run build"
+    "build": "cd web/web-game && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

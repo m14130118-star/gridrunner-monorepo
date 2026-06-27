@@ -166,7 +166,28 @@ export default function GaragePage() {
             );
           })}
         </div>
-        <button onClick={() => { router.push('/trip/new'); }}
+        <button onClick={() => {
+          const token = localStorage.getItem('gridrunner_token');
+          if (!token) { router.push('/auth/login'); return; }
+          if (!navigator.geolocation) { alert(lang === 'ru' ? 'GPS недоступен' : 'GPS unavailable'); return; }
+          navigator.geolocation.getCurrentPosition(async (pos) => {
+            try {
+              const r = await fetch(getApiUrl() + '/api/v1/geo/route/generate', {
+                method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+                body: JSON.stringify({ lat: pos.coords.latitude, lng: pos.coords.longitude, transport: userVehicle, userVibes: [], waypointCount: 3 }),
+              });
+              const data = await r.json();
+              if (data.success) {
+                localStorage.setItem('gridrunner_trip_waypoints', JSON.stringify({
+                  waypoints: data.waypoints, finish: data.finish, totalScore: data.totalScore,
+                  transport: data.transport, userVibes: data.userVibes,
+                }));
+                localStorage.setItem('gridrunner_vehicle', userVehicle);
+                router.push('/trip/active');
+              } else { alert(data.message || 'Route generation failed'); }
+            } catch { alert(lang === 'ru' ? 'Ошибка соединения' : 'Connection failed'); }
+          }, () => { alert(lang === 'ru' ? 'Включи GPS' : 'Enable GPS'); }, { enableHighAccuracy: true, timeout: 10000 });
+        }}
           className="btn btn-primary"
           style={{ width: '100%', padding: '18px 0', fontSize: 17, fontWeight: 800, borderRadius: 16, marginTop: 20 }}
         >
@@ -491,7 +512,28 @@ export default function GaragePage() {
         </div>
 
         {/* Start trip button */}
-        <button onClick={() => router.push('/trip/new')}
+        <button onClick={() => {
+          const token = localStorage.getItem('gridrunner_token');
+          if (!token) { router.push('/auth/login'); return; }
+          if (!navigator.geolocation) { alert(lang === 'ru' ? 'GPS недоступен' : 'GPS unavailable'); return; }
+          navigator.geolocation.getCurrentPosition(async (pos) => {
+            try {
+              const r = await fetch(getApiUrl() + '/api/v1/geo/route/generate', {
+                method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+                body: JSON.stringify({ lat: pos.coords.latitude, lng: pos.coords.longitude, transport: userVehicle, userVibes: [], waypointCount: 3 }),
+              });
+              const data = await r.json();
+              if (data.success) {
+                localStorage.setItem('gridrunner_trip_waypoints', JSON.stringify({
+                  waypoints: data.waypoints, finish: data.finish, totalScore: data.totalScore,
+                  transport: data.transport, userVibes: data.userVibes,
+                }));
+                localStorage.setItem('gridrunner_vehicle', userVehicle);
+                router.push('/trip/active');
+              } else { alert(data.message || 'Route generation failed'); }
+            } catch { alert(lang === 'ru' ? 'Ошибка соединения' : 'Connection failed'); }
+          }, () => { alert(lang === 'ru' ? 'Включи GPS' : 'Enable GPS'); }, { enableHighAccuracy: true, timeout: 10000 });
+        }}
           style={{
             width: '100%', maxWidth: 340, padding: '14px 0', borderRadius: 12,
             border: 'none', background: 'linear-gradient(135deg, #00e676, #00c853)',

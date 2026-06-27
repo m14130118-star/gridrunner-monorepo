@@ -158,24 +158,43 @@ export default function Profile() {
         ))}
       </div>
 
-      {/* Quick actions */}
-      <div className="card" style={{ padding: 14, marginBottom: 20, display: 'flex', gap: 8, justifyContent: 'space-around' }}>
-        <Link href="/garage" className="btn btn-secondary btn-sm" style={{ flex: 1, flexDirection: 'column', padding: '10px 8px', gap: 4, fontSize: 11, borderRadius: 10 }}>
-          <i className="fa-solid fa-warehouse" style={{ fontSize: 18 }}></i>
-          <span>{t('nav.garage')}</span>
-        </Link>
-        <Link href="/trip/new" className="btn btn-primary btn-sm" style={{ flex: 1, flexDirection: 'column', padding: '10px 8px', gap: 4, fontSize: 11, borderRadius: 10, background: 'linear-gradient(135deg, var(--green), #00c853)' }}>
-          <i className="fa-solid fa-play" style={{ fontSize: 18 }}></i>
-          <span>{t('trip.start')}</span>
-        </Link>
-        <Link href="/trips" className="btn btn-secondary btn-sm" style={{ flex: 1, flexDirection: 'column', padding: '10px 8px', gap: 4, fontSize: 11, borderRadius: 10 }}>
-          <i className="fa-solid fa-clock-rotate-left" style={{ fontSize: 18 }}></i>
-          <span>{t('nav.trips')}</span>
-        </Link>
-        <Link href="/arena" className="btn btn-secondary btn-sm" style={{ flex: 1, flexDirection: 'column', padding: '10px 8px', gap: 4, fontSize: 11, borderRadius: 10 }}>
-          <i className="fa-solid fa-crosshairs" style={{ fontSize: 18 }}></i>
-          <span>{t('nav.arena')}</span>
-        </Link>
+      {/* Quick actions — all nav */}
+      <div className="card" style={{ padding: 12, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
+          <Link href="/garage" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-warehouse" style={{ fontSize: 20 }}></i>
+            <span>{t('nav.garage')}</span>
+          </Link>
+          <Link href="/trips" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-clock-rotate-left" style={{ fontSize: 20 }}></i>
+            <span>{t('nav.trips')}</span>
+          </Link>
+          <Link href="/arena" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-crosshairs" style={{ fontSize: 20 }}></i>
+            <span>{t('nav.arena')}</span>
+          </Link>
+          <Link href="/leaderboard" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-ranking-star" style={{ fontSize: 20 }}></i>
+            <span>Rank</span>
+          </Link>
+          <Link href="/news" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-newspaper" style={{ fontSize: 20 }}></i>
+            <span>{t('nav.news')}</span>
+          </Link>
+          <Link href="/vip" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-crown" style={{ fontSize: 20, color: '#ffd740' }}></i>
+            <span>VIP</span>
+          </Link>
+          <Link href="/settings" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-gear" style={{ fontSize: 20 }}></i>
+            <span>{t('nav.settings')}</span>
+          </Link>
+          <button onClick={() => { localStorage.removeItem('gridrunner_user'); localStorage.removeItem('gridrunner_token'); router.push('/auth/login'); }}
+            className="btn btn-danger btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12, width: '100%' }}>
+            <i className="fa-solid fa-right-from-bracket" style={{ fontSize: 20 }}></i>
+            <span>{t('nav.logout')}</span>
+          </button>
+        </div>
       </div>
 
       {/* Achievements */}
@@ -204,6 +223,19 @@ export default function Profile() {
           </div>
         </div>
       )}
+
+      {/* Account actions */}
+      <div className="card" style={{ padding: 14, marginBottom: 20, display: 'flex', gap: 8 }}>
+        <Link href="/settings" className="btn btn-secondary btn-sm" style={{ flex: 1, justifyContent: 'center', padding: '10px 0', gap: 6, fontSize: 12, borderRadius: 10 }}>
+          <i className="fa-solid fa-gear"></i>
+          <span>{t('nav.settings')}</span>
+        </Link>
+        <button onClick={() => { localStorage.removeItem('gridrunner_user'); localStorage.removeItem('gridrunner_token'); router.push('/auth/login'); }}
+          className="btn btn-danger btn-sm" style={{ flex: 1, justifyContent: 'center', padding: '10px 0', gap: 6, fontSize: 12, borderRadius: 10 }}>
+          <i className="fa-solid fa-right-from-bracket"></i>
+          <span>{t('nav.logout')}</span>
+        </button>
+      </div>
 
       {/* Stats table */}
       <div className="card" style={{ padding: 16 }}>

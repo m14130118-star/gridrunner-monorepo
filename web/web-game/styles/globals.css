@@ -183,8 +183,9 @@ button { font-family: var(--font); }
 @media (max-width: 639px) {
   .header-desktop-only { display: none; }
   .header-mobile-toggle { display: flex !important; }
-  .page { padding-top: calc(var(--header-h) + 16px); }
 }
+
+
 
 .mobile-menu {
   position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0; z-index: 99;

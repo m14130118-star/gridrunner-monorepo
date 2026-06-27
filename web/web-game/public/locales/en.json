@@ -1,5 +1,5 @@
 {
-  "nav": {"home": "Home", "profile": "Profile", "arena": "Arena", "admin": "B2B", "login": "Sign In", "logout": "Sign Out", "register": "Register", "news": "News"},
+  "nav": {"home": "Home", "profile": "Profile", "garage": "Garage", "arena": "Arena", "trips": "Trips", "settings": "Settings", "admin": "B2B", "login": "Sign In", "logout": "Sign Out", "register": "Register", "news": "News"},
   "landing": {
     "title": "GridRunner", "subtitle": "Turn your walk into an adventure",
     "desc": "Explore the city, earn rewards, compete with friends",
