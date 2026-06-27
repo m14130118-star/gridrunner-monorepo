@@ -18,7 +18,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web/web-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/web-game/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Build web
+        run: npm run build
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Copy web to Android
+        run: npx cap copy android
+      - name: Build APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: gridrunner-apk
+          path: web/web-game/android/app/build/outputs/apk/debug/*.apk
+
+  build-landing:
+    needs: build-apk
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,6 +66,14 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: web/web-landing/package-lock.json
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: gridrunner-apk
+          path: public/
+      - name: Rename APK
+        run: |
+          mv public/*.apk public/gridrunner.apk 2>/dev/null || true
       - name: Install
         run: npm ci
       - name: Build
@@ -42,7 +86,7 @@ jobs:
           path: web/web-landing/out
 
   deploy:
-    needs: build
+    needs: build-landing
     runs-on: ubuntu-latest
     environment:
       name: github-pages
