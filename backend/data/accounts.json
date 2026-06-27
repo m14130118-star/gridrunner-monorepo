@@ -73,5 +73,22 @@
     "current_vehicle": "feet",
     "created_at": "2026-06-27T08:47:30.825Z",
     "id": 1782550051411
+  },
+  {
+    "username": "мама",
+    "email": "makspola@icloud.com",
+    "password_hash": "$2a$10$WOzuPUQugi90WQO9XNb6nuzw.UKMN.XjMxF.ckbGlZgCt4A6.co8m",
+    "role": "player",
+    "level": 1,
+    "xp": 0,
+    "gold": 0,
+    "vip": false,
+    "hp": 100,
+    "fuel": 100,
+    "current_vehicle": "feet",
+    "totalDistance": 0,
+    "totalTrips": 0,
+    "created_at": "2026-06-27T14:05:22.656Z",
+    "id": 1782569123379
   }
 ]

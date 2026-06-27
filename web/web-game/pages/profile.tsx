@@ -189,11 +189,6 @@ export default function Profile() {
             <i className="fa-solid fa-gear" style={{ fontSize: 20 }}></i>
             <span>{t('nav.settings')}</span>
           </Link>
-          <button onClick={() => { localStorage.removeItem('gridrunner_user'); localStorage.removeItem('gridrunner_token'); router.push('/auth/login'); }}
-            className="btn btn-danger btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12, width: '100%' }}>
-            <i className="fa-solid fa-right-from-bracket" style={{ fontSize: 20 }}></i>
-            <span>{t('nav.logout')}</span>
-          </button>
         </div>
       </div>
 
