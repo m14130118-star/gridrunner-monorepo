@@ -95,8 +95,17 @@ function getVibeMod(tags, userVibes) {
 
 // Generate a route with waypoints using TSP optimization
 function generateRoute(params) {
-  const { lat, lng, transport, userVibes, weather, radius = 2, waypointCount = 3 } = params;
+  const { lat, lng, transport, userVibes, weather, radius = 2, waypointCount = 3, eat, budget, roundTrip } = params;
   let pois = db.load('pois').filter(p => p.is_active !== false && p.approved !== false);
+
+  // Fallback / Cache logic check
+  if (pois.length === 0) {
+      return { 
+          waypoints: [], 
+          finish: { id: -1, name: 'Default Park', lat: lat + 0.01, lng: lng + 0.01, score: 100 }, 
+          hint: 'Маршрутов рядом нет, но вот уютный парк для прогулки.' 
+      };
+  }
 
   // Compute scores
   const scored = pois.map(p => ({

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useT } from '../src/lib/i18n';
+import { BackButton } from '../src/components/BackButton';
 
 interface NewsItem {
   id: string; title: string; content: string;
@@ -25,6 +26,7 @@ export default function NewsPage() {
 
   return (
     <div style={{ maxWidth: 700, margin: '0 auto', padding: '32px 16px' }}>
+      <BackButton />
       <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 4 }}>{lang === 'ru' ? 'Новости' : 'News'}</h1>
       <p style={{ opacity: 0.4, fontSize: 14, marginBottom: 24 }}>
         {lang === 'ru' ? 'Обновления и анонсы GridRunner' : 'GridRunner updates and announcements'}

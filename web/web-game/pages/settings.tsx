@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { BackButton } from '../src/components/BackButton';
 import { useT } from '../src/lib/i18n';
 import { setApiUrl, getApiUrl } from '../src/lib/api';
 import { useAuth } from '../src/lib/auth-context';
@@ -11,14 +12,20 @@ export default function SettingsPage() {
 
   const [volume, setVolume] = useState(80);
   const [garageMode, setGarageMode] = useState<'complex' | 'simple'>('complex');
+  const [mapTheme, setMapTheme] = useState<'schema' | 'satellite'>('schema');
   const [saved, setSaved] = useState(false);
   const [serverUrl, setServerUrl] = useState('http://localhost:3003');
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   useEffect(() => {
     const v = localStorage.getItem('gridrunner_volume');
     const g = localStorage.getItem('gridrunner_garage_mode') as 'complex' | 'simple' | null;
+    const m = localStorage.getItem('gridrunner_map_theme') as 'schema' | 'satellite' | null;
+    const a = localStorage.getItem('gridrunner_avatar');
     if (v) setVolume(parseInt(v));
     if (g) setGarageMode(g);
+    if (m) setMapTheme(m);
+    if (a) setAvatar(a);
     document.body.className = 'theme-dark';
     document.documentElement.style.colorScheme = 'dark';
     localStorage.setItem('gridrunner_theme', 'dark');
@@ -35,9 +42,23 @@ export default function SettingsPage() {
     logout();
   };
 
+  const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target?.result as string;
+      setAvatar(dataUrl);
+      localStorage.setItem('gridrunner_avatar', dataUrl);
+      window.dispatchEvent(new Event('avatar-update'));
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="settings-page">
       <div className="settings-container">
+        <BackButton />
         <h1 className="settings-title">
           <i className="fa-solid fa-gear" style={{ marginRight: 10 }}></i>
           {t('settings.title')}
@@ -76,6 +97,46 @@ export default function SettingsPage() {
               ? 'Сложный — 3D гараж с погодой. Простой — быстрый выбор транспорта.'
               : 'Complex — 3D garage with weather. Simple — quick vehicle selector.'}
           </p>
+        </section>
+
+        {/* Map Theme */}
+        <section className="settings-section">
+          <h2><i className="fa-solid fa-map"></i> {lang === 'ru' ? 'Стиль карты' : 'Map Style'}</h2>
+          <div className="theme-options">
+            <button className={`theme-btn ${mapTheme === 'schema' ? 'active' : ''}`} onClick={() => { setMapTheme('schema'); localStorage.setItem('gridrunner_map_theme', 'schema'); }}>
+              <i className="fa-solid fa-map"></i> {lang === 'ru' ? 'Схема' : 'Schema'}
+            </button>
+            <button className={`theme-btn ${mapTheme === 'satellite' ? 'active' : ''}`} onClick={() => { setMapTheme('satellite'); localStorage.setItem('gridrunner_map_theme', 'satellite'); }}>
+              <i className="fa-solid fa-satellite"></i> {lang === 'ru' ? 'Спутник' : 'Satellite'}
+            </button>
+          </div>
+        </section>
+
+        {/* Avatar */}
+        <section className="settings-section">
+          <h2><i className="fa-solid fa-user"></i> {t('settings.avatar')}</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div style={{ position: 'relative', width: 80, height: 80, flexShrink: 0 }}>
+              <div style={{
+                width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden',
+                background: avatar ? 'none' : 'linear-gradient(135deg, var(--green), var(--green-light))',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 32, fontWeight: 700, color: '#000',
+              }}>
+                {avatar ? <img src={avatar} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  : user ? user.username[0].toUpperCase() : '?'}
+              </div>
+              <label style={{
+                position: 'absolute', bottom: 0, right: 0, width: 28, height: 28, borderRadius: '50%',
+                background: 'var(--green)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', fontSize: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '2px solid #0d1117',
+              }}>
+                <input type="file" accept="image/*" onChange={handleAvatarUpload} style={{ display: 'none' }} />
+                <i className="fa-solid fa-camera"></i>
+              </label>
+            </div>
+            <span style={{ opacity: 0.6, fontSize: 13 }}>{t('settings.avatar_hint')}</span>
+          </div>
         </section>
 
         {/* Language */}

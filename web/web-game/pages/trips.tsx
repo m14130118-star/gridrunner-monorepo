@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useT } from '../src/lib/i18n';
 import { getApiUrl } from '../src/lib/api';
+import { BackButton } from '../src/components/BackButton';
 
 interface Trip {
   id: number; user_id: number; latitude: number; longitude: number;
@@ -78,6 +79,7 @@ export default function TripsPage() {
   return (
     <div className="trips-page">
       <div className="trips-container">
+        <BackButton />
         <h1 className="trips-title">
           <i className="fa-solid fa-clock-rotate-left"></i>
           {lang === 'ru' ? ' История поездок' : ' Trip History'}

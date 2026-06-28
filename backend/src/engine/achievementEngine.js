@@ -73,6 +73,7 @@ function computeStats(account, locs, checkins) {
     totalTripTime += dur > 0 ? dur : 0;
   }
 
+  const a = account || {};
   return {
     totalDistance: round(totalDistance),
     distByVehicle,
@@ -82,11 +83,11 @@ function computeStats(account, locs, checkins) {
     nightTripCount,
     arenaTripCount,
     totalTripTime,
-    level: account.level || 1,
-    xp: account.xp || 0,
-    gold: account.gold || 0,
-    vip: !!account.vip,
-    trapsHit: account.traps_hit || 0,
+    level: a.level || 1,
+    xp: a.xp || 0,
+    gold: a.gold || 0,
+    vip: !!a.vip,
+    trapsHit: a.traps_hit || 0,
   };
 }
 
@@ -148,16 +149,16 @@ function checkCondition(cond, stats, account, locs, checkins) {
       return stats.arenaTripCount >= (cond.target || 0);
 
     case 'traps_survived':
-      return (account.traps_hit || 0) >= (cond.target || 0);
+      return ((account && account.traps_hit) || 0) >= (cond.target || 0);
 
     case 'level_reached':
-      return (account.level || 1) >= (cond.target || 0);
+      return ((account && account.level) || 1) >= (cond.target || 0);
 
     case 'distance_day':
       return getTodayDistance(locs) >= (cond.target || 0);
 
     case 'vip':
-      return !!account.vip;
+      return account ? !!account.vip : false;
 
     case 'weather_trip':
       return hasWeatherTrip(locs, cond.weather);

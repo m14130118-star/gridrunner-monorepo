@@ -18,8 +18,8 @@ export default function Register() {
   const router = useRouter();
   const [step, setStep] = useState<'form' | 'vibes'>('form');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedVibes, setSelectedVibes] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);

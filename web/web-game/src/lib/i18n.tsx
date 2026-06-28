@@ -18,7 +18,8 @@ const locales: Record<string, any> = {
       "title": "Настройки", "theme": "Тема", "system": "Системная", "dark": "Тёмная", "light": "Светлая",
       "volume": "Громкость", "language": "Язык", "account": "Аккаунт", "username": "Имя",
       "delete": "Удалить", "delete_confirm": "Точно удалить аккаунт? Это действие нельзя отменить.",
-      "saved": "Сохранено", "mode_switch": "Режим", "chill": "Чилл", "arena": "Арена"
+      "saved": "Сохранено", "mode_switch": "Режим", "chill": "Чилл", "arena": "Арена",
+      "avatar": "Аватар", "avatar_hint": "Нажми, чтобы загрузить фото"
     },
     "trips": {
       "title": "История поездок", "no_trips": "Пока нет поездок", "back": "Назад",
@@ -48,7 +49,7 @@ const locales: Record<string, any> = {
   },
   en: {
     "nav": {"home": "Home", "profile": "Profile", "arena": "Arena", "admin": "B2B", "login": "Sign In", "logout": "Sign Out", "register": "Register", "news": "News", "garage": "Garage", "trips": "Trips", "settings": "Settings", "leaderboard": "Leaderboard"},
-    "landing": {"title": "GridRunner", "subtitle": "Turn your walk into an adventure", "desc": "Explore the city, earn rewards, compete with friends", "download": "Download", "learn": "Learn More", "modes": "Modes", "vip": "VIP Subscription", "vip_desc": "Unlimited trips, car mode, golden achievements", "vip_cta": "Get VIP", "ios": "App Store", "android": "Google Play", "about_title": "How it was built", "about_desc": "GridRunner is a solo pet project — from idea to production: maps, route algorithms, music, gamification, and a B2B panel. All code written from scratch, no templates.", "about_footer": "Built over a few months, solo."},
+    "landing": {"title": "GridRunner", "subtitle": "Turn your walk into an adventure", "desc": "Explore the city, earn rewards, compete with friends", "download": "Download APK", "get_started": "Get Started", "learn": "Learn More", "modes": "Modes", "vip": "VIP Subscription", "vip_desc": "Unlimited trips, car mode, golden achievements", "vip_cta": "Get VIP", "ios": "App Store", "android": "Google Play", "about_title": "How it was built", "about_desc": "GridRunner is a solo pet project — from idea to production: maps, route algorithms, music, gamification, and a B2B panel. All code written from scratch, no templates.", "about_footer": "Built over a few months, solo."},
     "modes": {"walk": {"name": "Walk", "speed": "≤12 km/h", "desc": "A relaxed pace — enjoy the views and discover new spots"}, "skate": {"name": "Skateboard", "speed": "≤25 km/h", "desc": "Drive and adrenaline for those who never stand still"}, "bike": {"name": "Bicycle", "speed": "≤45 km/h", "desc": "Speed and endurance — perfect for long distances"}, "car": {"name": "Car", "speed": "≤160 km/h", "desc": "Weekend road trips — explore far-off locations"}},
     "features": {"scenic": {"title": "Scenic Routes", "desc": "AI picks picturesque paths"}, "music": {"title": "Mood Music", "desc": "Playlists for your style"}, "checkin": {"title": "Check-ins & Rewards", "desc": "Earn XP and gold"}, "leaderboard": {"title": "Leaderboards", "desc": "Compete for territories"}},
     "auth": {"login_title": "Sign In", "register_title": "Register", "email": "Email", "password": "Password", "username": "Username", "preferences": "What do you like?", "pref_desc": "Pick your interests — we'll build routes around them", "prefs": {"embankment": "Embankments", "sunset": "Sunsets", "bakery": "Bakeries", "coffee": "Coffee", "park": "Parks", "history": "History", "shopping": "Shopping", "nature": "Nature", "food": "Food"}, "start": "Start adventure", "demo_hint": "Any email + password (3+ chars)"},
@@ -63,7 +64,8 @@ const locales: Record<string, any> = {
       "title": "Settings", "theme": "Theme", "system": "System", "dark": "Dark", "light": "Light",
       "volume": "Volume", "language": "Language", "account": "Account", "username": "Username",
       "delete": "Delete", "delete_confirm": "Delete account? This cannot be undone.",
-      "saved": "Saved", "mode_switch": "Mode", "chill": "Chill", "arena": "Arena"
+      "saved": "Saved", "mode_switch": "Mode", "chill": "Chill", "arena": "Arena",
+      "avatar": "Avatar", "avatar_hint": "Tap to upload a photo"
     },
     "trips": {
       "title": "Trip History", "no_trips": "No trips yet", "back": "Back",

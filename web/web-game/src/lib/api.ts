@@ -25,10 +25,11 @@ export function getApiUrl(): string {
 
   if (isLocalhost()) return DEV_API;
 
-  // Production — same origin
-  const base = window.location.origin;
-  cachedApiUrl = base;
-  return base;
+  // Production — use the main API domain
+  const apiUrl = localStorage.getItem('gridrunner_api_url');
+  if (apiUrl) { cachedApiUrl = apiUrl; return apiUrl; }
+  cachedApiUrl = 'https://gridrunner.duckdns.org';
+  return cachedApiUrl;
 }
 
 export function setApiUrl(url: string) {

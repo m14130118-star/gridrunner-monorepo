@@ -5,6 +5,7 @@ import * as authApi from './authApi';
 export interface User {
   id: number; username: string; email: string;
   vip: boolean; level: number; gold: number; xp: number;
+  role?: string;
   totalDistance?: number; totalTrips?: number; checkins?: number;
   rank?: string; vehicle?: string;
 }

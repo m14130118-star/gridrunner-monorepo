@@ -1,5 +1,6 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/router';
+import { BackButton } from '../src/components/BackButton';
 import { useT } from '../src/lib/i18n';
 import { getApiUrl } from '../src/lib/api';
 import dynamic from 'next/dynamic';
@@ -124,6 +125,7 @@ export default function GaragePage() {
   if (simple) {
     return (
       <div className="page" style={{ padding: '24px 16px 120px' }}>
+        <BackButton />
         <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 10 }}>
           <i className="fa-solid fa-warehouse"></i> {t('nav.garage')}
         </h1>
@@ -204,6 +206,9 @@ export default function GaragePage() {
       overflow: 'hidden', userSelect: 'none', touchAction: 'none',
       background: '#0d0f12',
     }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, zIndex: 10 }}>
+        <BackButton />
+      </div>
       {/* Detailed realistic garage background */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         {/* Concrete walls with noise texture */}

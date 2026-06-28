@@ -11,6 +11,7 @@ interface UserData {
   walkXp: number; skateXp: number; bikeXp: number; carXp: number;
   walkTrips: number; skateTrips: number; bikeTrips: number; carTrips: number;
   missionsCompleted?: number;
+  role?: string; faction?: string; factionName?: string; factionRole?: string; factionSize?: number; factionId?: string; hp?: number; gridCoins?: number;
 }
 
 function xpForLevel(level: number) { return level * 80 + 200; }
@@ -53,12 +54,11 @@ export default function Profile() {
     fetch(getApiUrl() + '/api/v1/player/profile', { headers: { Authorization: 'Bearer ' + token } })
       .then(r => r.json()).then(d => {
         if (d.success && d.profile) {
-          const stored = JSON.parse(localStorage.getItem('gridrunner_user') || '{}');
-          const enriched = { ...stored, ...d.profile };
-          localStorage.setItem('gridrunner_user', JSON.stringify(enriched));
-          setUser(enriched);
+          localStorage.setItem('gridrunner_user', JSON.stringify(d.profile));
+          setUser(d.profile);
         }
       }).catch(() => {});
+    
     fetch(getApiUrl() + '/api/v1/player/achievements/progress', { headers: { Authorization: 'Bearer ' + token } })
       .then(r => r.json()).then(d => { if (d.success) setAchProgress(d.progress || []); }).catch(() => {});
   }, []);
@@ -158,8 +158,19 @@ export default function Profile() {
         ))}
       </div>
 
-      {/* Quick actions — all nav */}
+            {/* Quick actions — all nav */}
       <div className="card" style={{ padding: 12, marginBottom: 20 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, padding: '0 4px' }}>
+          <div>
+            <div style={{ fontSize: 12, opacity: 0.5 }}>Твоя банда</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#32cd32' }}>{user.faction || 'Без банды'}</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: 12, opacity: 0.5 }}>Участников</div>
+            <div style={{ fontWeight: 700 }}>{user.factionSize || 1}</div>
+          </div>
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
           <Link href="/garage" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
             <i className="fa-solid fa-warehouse" style={{ fontSize: 20 }}></i>
@@ -189,13 +200,24 @@ export default function Profile() {
             <i className="fa-solid fa-gear" style={{ fontSize: 20 }}></i>
             <span>{t('nav.settings')}</span>
           </Link>
-          <button onClick={() => { localStorage.removeItem('gridrunner_user'); localStorage.removeItem('gridrunner_token'); router.push('/auth/login'); }}
-            className="btn btn-danger btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12, width: '100%' }}>
-            <i className="fa-solid fa-right-from-bracket" style={{ fontSize: 20 }}></i>
-            <span>{t('nav.logout')}</span>
-          </button>
+          {user.role === 'admin' && (
+            <Link href="/admin/dashboard" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+              <i className="fa-solid fa-shield" style={{ fontSize: 20, color: '#ff1744' }}></i>
+              <span>Admin</span>
+            </Link>
+          )}
+          <Link href="/business/add-point" className="btn btn-secondary btn-sm" style={{ flexDirection: 'column', padding: '12px 6px', gap: 6, fontSize: 11, borderRadius: 12 }}>
+            <i className="fa-solid fa-map-pin" style={{ fontSize: 20, color: '#00e676' }}></i>
+            <span>Добавить локацию</span>
+          </Link>
         </div>
       </div>
+
+      <button onClick={() => { localStorage.removeItem('gridrunner_user'); localStorage.removeItem('gridrunner_token'); router.push('/auth/login'); }}
+        className="btn btn-danger" style={{ width: '100%', padding: '14px', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+        <i className="fa-solid fa-right-from-bracket" style={{ fontSize: 20 }}></i>
+        <span>{t('nav.logout')}</span>
+      </button>
 
       {/* Achievements */}
       {achProgress.length > 0 && (

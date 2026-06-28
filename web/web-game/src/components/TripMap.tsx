@@ -45,13 +45,25 @@ export default function TripMap({ path, waypoints, finish, currentPos }: {
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
+    const darkSchema = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    });
+    const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Esri World Imagery'
+    });
+
+    const savedTheme = localStorage.getItem('gridrunner_map_theme') || 'schema';
+    const defaultLayer = savedTheme === 'satellite' ? satellite : darkSchema;
+
     const map = L.map(containerRef.current, {
       zoomControl: false, attributionControl: false,
+      layers: [defaultLayer]
     }).setView([55.75, 37.62], 15);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(map);
+    L.control.layers({
+      "СХЕМА": darkSchema,
+      "СПУТНИК": satellite
+    }, undefined, { position: 'topright' }).addTo(map);
 
     const marker = L.marker([55.75, 37.62], { icon: posIcon, zIndexOffset: 1000 }).addTo(map);
     const polyline = L.polyline([], {

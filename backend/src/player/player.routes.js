@@ -6,32 +6,34 @@ const achievementEngine = require('../engine/achievementEngine');
 const router = Router();
 router.use(authenticate);
 
-router.get('/profile', (req, res) => {
-  const account = db.findById('accounts', req.user.id);
+router.get('/profile', async (req, res) => {
+  const account = await db.findById('accounts', req.user.id);
   if (!account) return res.status(404).json({ success: false, message: 'Not found' });
-  const { password_hash, ...profile } = account;
+  
+  const profile = { ...account, faction: account.factionName || 'Без банды' };
+  delete profile.password_hash;
   res.json({ success: true, profile });
 });
 
-router.post('/vehicle/select', (req, res) => {
+router.post('/vehicle/select', async (req, res) => {
   const { vehicle } = req.body;
   const valid = ['feet', 'skateboard', 'bicycle', 'car'];
   if (!valid.includes(vehicle)) return res.status(400).json({ success: false, message: 'Invalid vehicle' });
-  const updated = db.update('accounts', req.user.id, { current_vehicle: vehicle });
+  const updated = await db.update('accounts', req.user.id, { current_vehicle: vehicle });
   if (!updated) return res.status(404).json({ success: false, message: 'Not found' });
   res.json({ success: true, vehicle });
 });
 
-router.post('/location/update', (req, res) => {
+router.post('/location/update', async (req, res) => {
   const { latitude, longitude, vehicle_id, isArenaMode } = req.body;
-  const account = db.findById('accounts', req.user.id);
+  const account = await db.findById('accounts', req.user.id);
   if (!account) return res.status(404).json({ success: false, message: 'Not found' });
 
-  const vehicles = db.load('vehicles');
+  const vehicles = await db.load('vehicles');
   const vehicle = vehicles.find(v => v.id === vehicle_id);
   if (!vehicle) return res.status(400).json({ success: false, message: 'Vehicle not found' });
 
-  const allLocs = db.query('locations', l => l.user_id === req.user.id);
+  const allLocs = await db.query('locations', { user_id: req.user.id });
   const prev = allLocs.length > 0 ? allLocs.sort((a, b) => b.timestamp - a.timestamp)[0] : null;
   let distance = 0, goldEarned = 0, xpEarned = 0, hpUsed = 0, fuelUsed = 0;
 
@@ -56,16 +58,16 @@ router.post('/location/update', (req, res) => {
 
     account.gold = (account.gold || 0) + goldEarned;
     account.xp = (account.xp || 0) + xpEarned;
-    db.update('accounts', req.user.id, account);
+    await db.update('accounts', req.user.id, account);
   }
 
-  db.insert('locations', {
+  await db.insert('locations', {
     user_id: req.user.id, latitude, longitude, vehicle_id,
     isArenaMode: isArenaMode || false, timestamp: Date.now(),
   });
 
   // Arena mode trap check
-  const trapHit = isArenaMode ? checkTraps(req.user.id, latitude, longitude) : null;
+  const trapHit = isArenaMode ? await checkTraps(req.user.id, latitude, longitude) : null;
 
   // Check achievements on each location update
   const achResult = achievementEngine.check(req.user.id);
@@ -78,40 +80,39 @@ router.post('/location/update', (req, res) => {
   });
 });
 
-router.post('/check-in', (req, res) => {
+router.post('/check-in', async (req, res) => {
   const { checkpoint_id, latitude, longitude } = req.body;
-  const checkpoint = db.findById('checkpoints', checkpoint_id);
+  const checkpoint = await db.findById('checkpoints', checkpoint_id);
   if (!checkpoint) return res.status(404).json({ success: false, message: 'Checkpoint not found' });
 
   const dist = haversine(checkpoint.latitude, latitude, checkpoint.longitude, longitude);
   if (dist > 0.03) return res.status(400).json({ success: false, message: 'Too far from checkpoint' });
 
-  const checkin = db.insert('checkins', {
+  await db.insert('checkins', {
     user_id: req.user.id, checkpoint_id, timestamp: Date.now(),
   });
 
-  const account = db.findById('accounts', req.user.id);
+  const account = await db.findById('accounts', req.user.id);
   account.gold = (account.gold || 0) + 50;
   account.xp = (account.xp || 0) + 25;
-  db.update('accounts', req.user.id, account);
+  await db.update('accounts', req.user.id, account);
 
-  res.json({ success: true, checkin_id: checkin.id, reward: { gold: 50, xp: 25 }, restored_hp: checkpoint.restore_hp || 0 });
+  res.json({ success: true, reward: { gold: 50, xp: 25 }, restored_hp: checkpoint.restore_hp || 0 });
 });
 
-// Achievements
-router.get('/achievements', (req, res) => {
-  const userAchs = db.query('achievements', a => a.user_id === req.user.id);
+router.get('/achievements', async (req, res) => {
+  const userAchs = await db.query('achievements', { user_id: req.user.id });
   res.json({ success: true, achievements: userAchs });
 });
 
-// Achievement progress (all defs + user's earned status)
-router.get('/achievements/progress', (req, res) => {
-  const userAchs = db.query('achievements', a => a.user_id === req.user.id);
+router.get('/achievements/progress', async (req, res) => {
+  const userAchs = await db.query('achievements', { user_id: req.user.id });
   const earnedIds = new Set(userAchs.map(a => a.achievement_id));
   const defs = require('../engine/achievement_defs');
-  const account = db.findById('accounts', req.user.id);
-  const allLocs = db.query('locations', l => l.user_id === req.user.id);
-  const checkins = db.query('checkins', c => c.user_id === req.user.id);
+  const account = await db.findById('accounts', req.user.id);
+  if (!account) return res.status(404).json({ success: false, message: 'Account not found' });
+  const allLocs = await db.query('locations', { user_id: req.user.id });
+  const checkins = await db.query('checkins', { user_id: req.user.id });
   const stats = achievementEngine.computeStats(account, allLocs, checkins);
 
   const progress = defs.map(def => ({
@@ -133,26 +134,23 @@ router.get('/achievements/progress', (req, res) => {
   res.json({ success: true, progress, stats });
 });
 
-// Force-check achievements
-router.post('/achievements/check', (req, res) => {
+router.post('/achievements/check', async (req, res) => {
   const result = achievementEngine.check(req.user.id);
   res.json({ success: true, ...result });
 });
 
-router.get('/quests', (req, res) => {
+router.get('/quests', async (req, res) => {
   const today = new Date().toDateString();
-  const quests = db.query('quests', q => q.user_id === req.user.id && q.date === today);
-  // Generate daily quests if none exist
+  const quests = await db.query('quests', { user_id: req.user.id, date: today });
   if (quests.length === 0) {
-    const generated = generateDailyQuests(req.user.id);
+    const generated = await generateDailyQuests(req.user.id);
     return res.json({ success: true, quests: generated });
   }
   res.json({ success: true, quests });
 });
 
-// Trip history — grouped into trips by time gaps (>5min = new trip)
-router.get('/trips', (req, res) => {
-  const locs = db.query('locations', l => l.user_id === req.user.id)
+router.get('/trips', async (req, res) => {
+  const locs = (await db.query('locations', { user_id: req.user.id }))
     .sort((a, b) => a.timestamp - b.timestamp);
 
   const trips = [];
@@ -162,7 +160,7 @@ router.get('/trips', (req, res) => {
       current.push(locs[i]);
     } else {
       const gap = locs[i].timestamp - current[current.length - 1].timestamp;
-      if (gap > 300000) { // 5 min gap = new trip
+      if (gap > 300000) {
         trips.push({ points: [...current] });
         current = [locs[i]];
       } else {
@@ -172,7 +170,6 @@ router.get('/trips', (req, res) => {
   }
   if (current.length > 0) trips.push({ points: current });
 
-  // Enrich each trip with stats
   const enriched = trips.map(t => {
     const pts = t.points;
     let totalDist = 0;
@@ -189,35 +186,27 @@ router.get('/trips', (req, res) => {
       vehicle_id: pts[0].vehicle_id,
       isArenaMode: pts.some(p => p.isArenaMode),
     };
-  }).reverse(); // newest first
+  }).reverse();
 
   res.json({ success: true, trips: enriched });
 });
 
-function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-function checkTraps(userId, lat, lng) {
-  const traps = db.query('traps', t => t.is_active);
+async function checkTraps(userId, lat, lng) {
+  const traps = await db.query('traps', { is_active: true });
   for (const trap of traps) {
     const dist = haversine(trap.latitude, trap.longitude, lat, lng);
     if (dist <= (trap.radius_km || 0.015)) {
-      const account = db.findById('accounts', userId);
+      const account = await db.findById('accounts', userId);
       const dmg = trap.damage_hp || 10;
       account.hp = Math.max(0, account.hp - dmg);
-      db.update('accounts', userId, account);
+      await db.update('accounts', userId, account);
       return { trap_id: trap.id, name: trap.name, damage_hp: dmg, hp_left: account.hp };
     }
   }
   return null;
 }
 
-function generateDailyQuests(userId) {
+async function generateDailyQuests(userId) {
   const templates = [
     { title: 'Утренний разгон', desc: 'Трип 1.5км до 11:00 + чекин в кафе', mode: 'chill', xp: 100, gold: 30 },
     { title: 'Зачистка спота', desc: 'Въехать на вражескую территорию, скорость >18км/ч 45с + боевой чекин', mode: 'arena', xp: 250, gold: 0 },
@@ -228,17 +217,17 @@ function generateDailyQuests(userId) {
     user_id: userId, date: today, ...t, id: Date.now() + Math.random() * 1000,
     progress: 0, target: 1, completed: false,
   }));
-  quests.forEach(q => db.insert('quests', q));
+  for(const q of quests) await db.insert('quests', q);
   return quests;
 }
 
-router.post('/trip/complete', (req, res) => {
+router.post('/trip/complete', async (req, res) => {
   const { distance, duration, waypoints_total, waypoints_visited, transport } = req.body;
   if (distance == null || waypoints_total == null || waypoints_visited == null) {
     return res.status(400).json({ success: false, message: 'Missing required fields' });
   }
 
-  const account = db.findById('accounts', req.user.id);
+  const account = await db.findById('accounts', req.user.id);
   if (!account) return res.status(404).json({ success: false, message: 'Not found' });
 
   const visitedRatio = Math.min(1, (waypoints_visited || 0) / Math.max(1, waypoints_total || 1));
@@ -253,8 +242,10 @@ router.post('/trip/complete', (req, res) => {
   const totalXp = baseXp + distXp + wpXp + durationBonus;
   const totalGold = baseGold + distGold + wpGold;
 
+  const coinReward = Math.floor((distance || 0) * 3) + 5;
   account.xp = (account.xp || 0) + totalXp;
   account.gold = (account.gold || 0) + totalGold;
+  account.gridCoins = (account.gridCoins || 0) + coinReward;
   account.totalDistance = (account.totalDistance || 0) + (distance || 0);
   account.totalTrips = (account.totalTrips || 0) + 1;
 
@@ -268,12 +259,13 @@ router.post('/trip/complete', (req, res) => {
     account.fuel = 100;
   }
 
-  db.update('accounts', req.user.id, account);
+  await db.update('accounts', req.user.id, account);
 
   res.json({
     success: true,
     totalXp,
     totalGold,
+    gridCoins: coinReward,
     baseXp,
     distXp,
     wpXp,
@@ -289,8 +281,8 @@ router.post('/trip/complete', (req, res) => {
   });
 });
 
-router.get('/leaderboard', (req, res) => {
-  const accounts = db.load('accounts');
+router.get('/leaderboard', async (req, res) => {
+  const accounts = await db.load('accounts');
   const sorted = accounts
     .map(a => ({ id: a.id, username: a.username, level: a.level || 1, xp: a.xp || 0, gold: a.gold || 0, totalDistance: a.totalDistance || 0, totalTrips: a.totalTrips || 0, vip: a.vip || false, vehicle: a.current_vehicle || 'feet' }))
     .sort((a, b) => b.xp - a.xp || b.level - a.level)
@@ -300,3 +292,4 @@ router.get('/leaderboard', (req, res) => {
 });
 
 module.exports = router;
+

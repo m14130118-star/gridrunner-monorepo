@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useT } from '../src/lib/i18n';
 import { getApiUrl } from '../src/lib/api';
+import { BackButton } from '../src/components/BackButton';
 
 interface LeaderboardEntry {
   rank: number;
@@ -68,6 +69,7 @@ export default function Leaderboard() {
 
   return (
     <div className="page" style={{ paddingBottom: 120 }}>
+      <BackButton />
       <div className="anim-fade" style={{ textAlign: 'center', marginBottom: 24 }}>
         <div style={{
           width: 56, height: 56, borderRadius: '50%',
