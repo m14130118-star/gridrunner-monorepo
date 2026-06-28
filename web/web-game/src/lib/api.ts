@@ -18,8 +18,8 @@ export function getApiUrl(): string {
     // On mobile APK, try to detect the dev server IP or use stored one
     const stored = localStorage.getItem('gridrunner_api_url');
     if (stored) { cachedApiUrl = stored; return stored; }
-    // Default fallback — user sets this in settings
-    cachedApiUrl = 'http://192.168.1.100:3003';
+    // Production API
+    cachedApiUrl = 'https://gridrunner.duckdns.org';
     return cachedApiUrl;
   }
 

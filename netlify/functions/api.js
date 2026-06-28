@@ -27,4 +27,8 @@ for (const f of MUTABLE) {
 const serverless = require('serverless-http');
 const app = require('../../backend/src/app');
 
-exports.handler = serverless(app);
+exports.handler = serverless(app, {
+  request(request, event, context) {
+    request.url = '/api' + request.url;
+  },
+});
