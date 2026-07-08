@@ -4,12 +4,15 @@ import { useState } from 'react';
 
 export default function Business() {
   const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState('');
 
   const handlePay = async () => {
+    const sum = parseInt(amount, 10);
+    if (!sum || sum < 1) { alert('Введи сумму в рублях'); return; }
     setLoading(true);
     try {
       const apiBase = process.env.NEXT_PUBLIC_AUTH_URL?.replace('/api/v1', '') || 'https://gridrunner-api.vercel.app';
-      const res = await fetch(`${apiBase}/api/v1/payment/business-pay`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: 1000, paymentMethod: 2 }) });
+      const res = await fetch(`${apiBase}/api/v1/payment/business-pay`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: sum, paymentMethod: 2 }) });
       const data = await res.json();
       if (data.redirect_url) {
         window.location.href = data.redirect_url;
@@ -56,15 +59,16 @@ export default function Business() {
           <p style={{ fontSize: 13, opacity: 0.5, marginBottom: 16 }}>Хочешь добавить свой бизнес на карту GridRunner? Цена договорная.</p>
           <a href="https://t.me/do_re_mi_do_re_do" style={{ display: 'inline-block', padding: '12px 32px', background: '#00ffcc', color: '#000', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none', letterSpacing: 1 }}>НАПИСАТЬ В ТГ</a>
           
-          <div style={{ marginTop: 20 }}>
-            <p style={{ fontSize: 13, opacity: 0.5, marginBottom: 10 }}>Оплатить услуги:</p>
-            <button 
-              onClick={handlePay}
-              disabled={loading}
-              style={{ padding: '10px 20px', background: loading ? '#555' : '#ff0055', color: '#fff', borderRadius: 8, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', fontWeight: 700, fontSize: 14 }}
-            >
-              {loading ? 'Создание платежа...' : 'Оплатить через Platega'}
-            </button>
+          <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+            <p style={{ fontSize: 13, opacity: 0.5 }}>Уже согласовали сумму? Оплати:</p>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <input type="number" min="1" placeholder="Сумма в рублях" value={amount} onChange={e => setAmount(e.target.value)}
+                style={{ padding: '10px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: '#e0f0e0', fontSize: 14, width: 160, fontFamily: 'monospace' }} />
+              <button onClick={handlePay} disabled={loading}
+                style={{ padding: '10px 20px', background: loading ? '#555' : '#ff0055', color: '#fff', borderRadius: 8, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', fontWeight: 700, fontSize: 14 }}>
+                {loading ? 'Создание...' : 'Оплатить'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
