@@ -105,6 +105,37 @@ router.post('/platega-webhook', async (req, res) => {
   }
 });
 
+router.post('/business-pay', async (req, res) => {
+  const { amount = 1000, paymentMethod = 2 } = req.body;
+
+  if (!PLATEGA_MERCHANT_ID || !PLATEGA_SECRET) {
+    return res.status(500).json({ success: false, message: 'Платежи временно недоступны' });
+  }
+
+  const origin = req.headers.origin || 'https://gridrunner.duckdns.org';
+
+  try {
+    const result = await plategaRequest('POST', '/transaction/process', {
+      paymentMethod,
+      id: crypto.randomUUID(),
+      paymentDetails: { amount, currency: 'RUB' },
+      description: 'Услуги GridRunner Business',
+      return: `${origin}/business?success=1`,
+      failedUrl: `${origin}/business?failed=1`,
+    });
+
+    if (result?.redirect) {
+      return res.json({ success: true, redirect_url: result.redirect, transactionId: result.transactionId });
+    } else {
+      console.warn('[Platega] Business pay failed:', JSON.stringify(result));
+      return res.status(502).json({ success: false, message: result.message || 'Ошибка создания платежа' });
+    }
+  } catch (e) {
+    console.error('[Platega] Business pay error:', e);
+    return res.status(500).json({ success: false, message: 'Внутренняя ошибка' });
+  }
+});
+
 router.use(authenticate);
 
 router.get('/plans', (req, res) => {
@@ -163,37 +194,6 @@ router.post('/create-session', async (req, res) => {
     redirect_url: paymentUrl,
     amount: plan.price_rub, description: plan.name,
   });
-});
-
-router.post('/business-pay', async (req, res) => {
-  const { amount = 1000, paymentMethod = 2 } = req.body;
-
-  if (!PLATEGA_MERCHANT_ID || !PLATEGA_SECRET) {
-    return res.status(500).json({ success: false, message: 'Платежи временно недоступны' });
-  }
-
-  const origin = req.headers.origin || 'https://gridrunner.duckdns.org';
-
-  try {
-    const result = await plategaRequest('POST', '/transaction/process', {
-      paymentMethod,
-      id: crypto.randomUUID(),
-      paymentDetails: { amount, currency: 'RUB' },
-      description: 'Услуги GridRunner Business',
-      return: `${origin}/business?success=1`,
-      failedUrl: `${origin}/business?failed=1`,
-    });
-
-    if (result?.redirect) {
-      return res.json({ success: true, redirect_url: result.redirect, transactionId: result.transactionId });
-    } else {
-      console.warn('[Platega] Business pay failed:', JSON.stringify(result));
-      return res.status(502).json({ success: false, message: result.message || 'Ошибка создания платежа' });
-    }
-  } catch (e) {
-    console.error('[Platega] Business pay error:', e);
-    return res.status(500).json({ success: false, message: 'Внутренняя ошибка' });
-  }
 });
 
 router.post('/confirm', async (req, res) => {
