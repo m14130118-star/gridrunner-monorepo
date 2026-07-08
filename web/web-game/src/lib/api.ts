@@ -1,4 +1,4 @@
-const DEV_API = 'http://localhost:3003';
+﻿const DEV_API = 'http://localhost:3003';
 
 let cachedApiUrl: string | null = null;
 
@@ -11,24 +11,36 @@ function isLocalhost(): boolean {
   return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 }
 
+const PROD_API = 'https://gridrunner-api.vercel.app';
+
+// Drop stale overrides from the Netlify era so old clients migrate cleanly
+function getStoredApiUrl(): string | null {
+  const stored = localStorage.getItem('gridrunner_api_url');
+  if (stored && (stored.includes('netlify') || stored.includes('duckdns'))) {
+    localStorage.removeItem('gridrunner_api_url');
+    return null;
+  }
+  return stored;
+}
+
 export function getApiUrl(): string {
   if (cachedApiUrl) return cachedApiUrl;
 
   if (isCapacitor()) {
     // On mobile APK, try to detect the dev server IP or use stored one
-    const stored = localStorage.getItem('gridrunner_api_url');
+    const stored = getStoredApiUrl();
     if (stored) { cachedApiUrl = stored; return stored; }
     // Production API
-    cachedApiUrl = 'https://gridrunner.duckdns.org';
+    cachedApiUrl = PROD_API;
     return cachedApiUrl;
   }
 
   if (isLocalhost()) return DEV_API;
 
   // Production — use the main API domain
-  const apiUrl = localStorage.getItem('gridrunner_api_url');
+  const apiUrl = getStoredApiUrl();
   if (apiUrl) { cachedApiUrl = apiUrl; return apiUrl; }
-  cachedApiUrl = 'https://gridrunner.duckdns.org';
+  cachedApiUrl = PROD_API;
   return cachedApiUrl;
 }
 

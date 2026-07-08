@@ -175,7 +175,7 @@ export default function Vehicle3D({ vehicle, color = '#00e676' }: { vehicle: str
   const onReady = useCallback(() => setReady(true), []);
 
   if (vehicle === 'feet' || vehicle === 'car') {
-    const emoji = vehicle === 'feet' ? '🦶' : '🚗';
+    const emoji = vehicle === 'feet' ? 'RUN' : 'CAR';
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <span style={{ fontSize: 72, opacity: 0.6, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))', animation: 'float 2s ease-in-out infinite' }}>{emoji}</span>

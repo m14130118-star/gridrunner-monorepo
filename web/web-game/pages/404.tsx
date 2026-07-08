@@ -21,7 +21,7 @@ export default function Custom404() {
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 16px' }}>
       <div style={{ maxWidth: 480, width: '100%', textAlign: 'center' }}>
-        <div style={{ fontSize: 72, marginBottom: 8, opacity: 0.3 }}>🚧</div>
+        <div style={{ fontSize: 56, marginBottom: 8, opacity: 0.3 }}><i className="fa-solid fa-road-barrier"></i></div>
         <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8 }}>
           {lang === 'ru' ? 'Скоро будет' : 'Coming Soon'}
         </h1>
@@ -33,7 +33,7 @@ export default function Custom404() {
 
         {subscribed ? (
           <div style={{ padding: 24, borderRadius: 16, background: 'rgba(0,230,118,0.06)', border: '1px solid rgba(0,230,118,0.15)' }}>
-            <div style={{ fontSize: 24, marginBottom: 4 }}>✅</div>
+            <div style={{ fontSize: 22, marginBottom: 4, color: '#00e676' }}><i className="fa-solid fa-circle-check"></i></div>
             <p style={{ fontWeight: 700, fontSize: 16 }}>{lang === 'ru' ? 'Ты в списке!' : 'You\'re on the list!'}</p>
             <p style={{ fontSize: 13, opacity: 0.5, marginTop: 4 }}>
               {lang === 'ru' ? 'Напишем, как только приложение выйдет' : 'We\'ll write when the app launches'}

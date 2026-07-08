@@ -1,12 +1,9 @@
-process.env.DATA_DIR = '/tmp/data';
-
 const fs = require('fs');
 const path = require('path');
 
 const DIR = '/tmp/data';
 if (!fs.existsSync(DIR)) fs.mkdirSync(DIR, { recursive: true });
 
-// Seed from bundled JS module (forces bundler inclusion)
 try {
   const seed = require('./lib/seed');
   for (const [key, data] of Object.entries(seed)) {
@@ -17,7 +14,6 @@ try {
   console.error('Seed error:', e.message);
 }
 
-// Ensure mutable data files exist as empty arrays
 const MUTABLE = ['accounts.json', 'achievements.json', 'checkpoints.json', 'checkins.json', 'locations.json', 'quests.json'];
 for (const f of MUTABLE) {
   const p = path.join(DIR, f);
@@ -28,7 +24,11 @@ const serverless = require('serverless-http');
 const app = require('../../backend/src/app');
 
 exports.handler = serverless(app, {
-  request(request, event, context) {
-    request.url = '/api' + request.url;
+  request(request, event) {
+    // event.path is like: /.netlify/functions/api/v1/health
+    // We need request.url to be: /api/v1/health
+    const p = event.path || '';
+    const m = p.match(/^\/\.netlify\/functions\/api(\/.*)?$/);
+    request.url = m ? (m[1] || '/') : p;
   },
 });

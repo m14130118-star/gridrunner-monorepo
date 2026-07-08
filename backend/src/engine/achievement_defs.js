@@ -73,6 +73,9 @@ const ACHIEVEMENTS = [
   { id: 'mil_22', category: 'milestone', title: 'Без единой царапины', desc: 'Пройти 20 контрактов без потери HP', icon: 'shield', condition: { type: 'trip_count', target: 20 }, reward: { xp: 2500 } },
   { id: 'mil_28', category: 'milestone', title: 'Пожиратель миль', desc: 'Проехать 40 км за один день', icon: 'bolt', condition: { type: 'distance_day', target: 40 }, reward: { xp: 2500 } },
   { id: 'mil_01', category: 'milestone', title: 'Король улиц', desc: 'Достичь 50-го уровня', icon: 'crown', condition: { type: 'level_reached', target: 50 }, reward: { xp: 5000 } },
+
+  // Special — awarded at registration to the first 100 players (not via engine)
+  { id: 'founder_100', category: 'milestone', title: 'С начала времён', titleEn: 'From the Dawn', desc: 'Один из первых 100 игроков GridRunner', descEn: 'One of the first 100 GridRunner players', icon: 'crown', condition: { type: 'special' }, reward: { xp: 1000 } },
 ];
 
 module.exports = ACHIEVEMENTS;

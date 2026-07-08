@@ -2,27 +2,26 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useT } from '../src/lib/i18n';
 import { BackButton } from '../src/components/BackButton';
+import { getApiUrl } from '../src/lib/api';
 
 interface NewsItem {
-  id: string; title: string; content: string;
+  id: string | number; title: string; content: string;
   date: number; author: string; pinned?: boolean;
-}
-
-function getNews(): NewsItem[] {
-  try { return JSON.parse(localStorage.getItem('gridrunner_news') || '[]'); } catch { return []; }
 }
 
 export default function NewsPage() {
   const { t, lang } = useT();
   const [news, setNews] = useState<NewsItem[]>([]);
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    setNews(getNews().sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.date - a.date));
-    try { const u = localStorage.getItem('gridrunner_user'); if (u) setUser(JSON.parse(u)); } catch {}
+    fetch(getApiUrl() + '/api/v1/news')
+      .then(r => r.json())
+      .then(d => { if (d.success) setNews(d.news || []); })
+      .catch(() => {});
+    // Показываем кнопку управления тому, кто уже логинился в админку
+    setIsAdmin(!!localStorage.getItem('gridrunner_admin_token'));
   }, []);
-
-  const ADMIN_USER = 'hexvel';
 
   return (
     <div style={{ maxWidth: 700, margin: '0 auto', padding: '32px 16px' }}>
@@ -31,7 +30,7 @@ export default function NewsPage() {
       <p style={{ opacity: 0.4, fontSize: 14, marginBottom: 24 }}>
         {lang === 'ru' ? 'Обновления и анонсы GridRunner' : 'GridRunner updates and announcements'}
       </p>
-      {user?.username === ADMIN_USER && (
+      {isAdmin && (
         <Link href="/admin/news" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 10, background: 'rgba(0,230,118,0.1)', color: '#00e676', fontSize: 13, fontWeight: 600, textDecoration: 'none', marginBottom: 20 }}>
           + {lang === 'ru' ? 'Новая запись' : 'New post'}
         </Link>

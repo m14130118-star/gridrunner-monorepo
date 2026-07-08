@@ -10,8 +10,28 @@ router.get('/profile', async (req, res) => {
   const account = await db.findById('accounts', req.user.id);
   if (!account) return res.status(404).json({ success: false, message: 'Not found' });
   
+  const rating = require('../engine/ratingSystem');
   const profile = { ...account, faction: account.factionName || 'Без банды' };
+  profile.arenaRating = rating.getRating(account);
+  profile.arenaRank = rating.getRank(profile.arenaRating);
+  profile.arenaGames = account.arena_games || 0;
   delete profile.password_hash;
+
+  // Platega не умеет рекуррентные платежи — предупреждаем о конце VIP
+  // пуш-уведомлением за 3 дня (не чаще раза в сутки)
+  try {
+    if ((account.isVip || account.vip) && account.vipExpiresAt) {
+      const msLeft = new Date(account.vipExpiresAt).getTime() - Date.now();
+      const daysLeft = Math.ceil(msLeft / 86400000);
+      const warnedAgo = Date.now() - (account.vip_warned_at || 0);
+      if (msLeft > 0 && daysLeft <= 3 && warnedAgo > 86400000) {
+        const events = require('../common/events');
+        await events.emit('vip_expiring', { daysLeft }, { userId: account.id });
+        await db.update('accounts', account.id, { vip_warned_at: Date.now() });
+      }
+    }
+  } catch {}
+
   res.json({ success: true, profile });
 });
 
@@ -70,7 +90,7 @@ router.post('/location/update', async (req, res) => {
   const trapHit = isArenaMode ? await checkTraps(req.user.id, latitude, longitude) : null;
 
   // Check achievements on each location update
-  const achResult = achievementEngine.check(req.user.id);
+  const achResult = await achievementEngine.check(req.user.id);
 
   res.json({
     success: true, distance, gold_earned: goldEarned, xp_earned: xpEarned,
@@ -85,7 +105,7 @@ router.post('/check-in', async (req, res) => {
   const checkpoint = await db.findById('checkpoints', checkpoint_id);
   if (!checkpoint) return res.status(404).json({ success: false, message: 'Checkpoint not found' });
 
-  const dist = haversine(checkpoint.latitude, latitude, checkpoint.longitude, longitude);
+  const dist = haversine(checkpoint.latitude, checkpoint.longitude, latitude, longitude);
   if (dist > 0.03) return res.status(400).json({ success: false, message: 'Too far from checkpoint' });
 
   await db.insert('checkins', {
@@ -135,7 +155,7 @@ router.get('/achievements/progress', async (req, res) => {
 });
 
 router.post('/achievements/check', async (req, res) => {
-  const result = achievementEngine.check(req.user.id);
+  const result = await achievementEngine.check(req.user.id);
   res.json({ success: true, ...result });
 });
 
@@ -198,9 +218,11 @@ async function checkTraps(userId, lat, lng) {
     if (dist <= (trap.radius_km || 0.015)) {
       const account = await db.findById('accounts', userId);
       const dmg = trap.damage_hp || 10;
-      account.hp = Math.max(0, account.hp - dmg);
+      // Death protection while a trip is active: HP can't drop below 1
+      const floor = account.is_in_trip === true ? 1 : 0;
+      account.hp = Math.max(floor, account.hp - dmg);
       await db.update('accounts', userId, account);
-      return { trap_id: trap.id, name: trap.name, damage_hp: dmg, hp_left: account.hp };
+      return { trap_id: trap.id, name: trap.name, damage_hp: dmg, hp_left: account.hp, tripProtected: floor === 1 && account.hp === 1 };
     }
   }
   return null;
@@ -221,8 +243,38 @@ async function generateDailyQuests(userId) {
   return quests;
 }
 
+// Trip economy v2 — deterministic reward math, no randomness:
+//   XP    = 100 + km * K_transport + checkpoints * 25 + minutes * 2
+//   Coins = checkpoints * 15 + km * K_gold
+//   +50 coins for a real >=5 min food stop; x1.25 for A→B trips; x2 for VIP
+const XP_PER_KM = { feet: 150, skateboard: 100, bicycle: 75, car: 20 };
+const GOLD_PER_KM = { feet: 50, skateboard: 35, bicycle: 25, car: 5 };
+
+// Detect a >=N min dwell within 60 m of a food checkpoint from GPS logs
+async function detectFoodStop(userId, tripId, minMinutes = 5) {
+  const foodCps = (await db.query('checkpoints', { trip_id: tripId, kind: 'food' }));
+  if (foodCps.length === 0) return false;
+  const locs = (await db.query('locations', { user_id: userId }))
+    .sort((a, b) => a.timestamp - b.timestamp);
+  if (locs.length === 0) return false;
+
+  for (const cp of foodCps) {
+    let dwellStart = null;
+    for (const l of locs) {
+      const distM = haversine(cp.latitude, cp.longitude, l.latitude, l.longitude) * 1000;
+      if (distM <= 60) {
+        if (dwellStart === null) dwellStart = l.timestamp;
+        if (l.timestamp - dwellStart >= minMinutes * 60000) return true;
+      } else {
+        dwellStart = null;
+      }
+    }
+  }
+  return false;
+}
+
 router.post('/trip/complete', async (req, res) => {
-  const { distance, duration, waypoints_total, waypoints_visited, transport } = req.body;
+  const { trip_id, distance, duration, waypoints_total, waypoints_visited, transport } = req.body;
   if (distance == null || waypoints_total == null || waypoints_visited == null) {
     return res.status(400).json({ success: false, message: 'Missing required fields' });
   }
@@ -230,24 +282,63 @@ router.post('/trip/complete', async (req, res) => {
   const account = await db.findById('accounts', req.user.id);
   if (!account) return res.status(404).json({ success: false, message: 'Not found' });
 
-  const visitedRatio = Math.min(1, (waypoints_visited || 0) / Math.max(1, waypoints_total || 1));
-  const baseXp = 50;
-  const baseGold = 10;
-  const distXp = Math.floor((distance || 0) * 5);
-  const distGold = Math.floor((distance || 0) * 2);
-  const wpXp = Math.floor(visitedRatio * 100);
-  const wpGold = Math.floor(visitedRatio * 20);
-  const durationBonus = (duration || 0) > 600 ? 20 : 0;
+  const trip = trip_id ? await db.findById('trips', trip_id) : null;
+  const vehicle = transport || trip?.transport || account.current_vehicle || 'feet';
+  const km = Math.max(0, Number(distance) || 0);
+  const minutes = Math.max(0, Math.round((Number(duration) || 0) / 60));
+  const cpVisited = Math.max(0, Number(waypoints_visited) || 0);
 
-  const totalXp = baseXp + distXp + wpXp + durationBonus;
-  const totalGold = baseGold + distGold + wpGold;
+  // XP
+  const baseXp = 100;
+  const distXp = Math.round(km * (XP_PER_KM[vehicle] ?? XP_PER_KM.feet));
+  const cpXp = cpVisited * 25;
+  const timeXp = minutes * 2;
+  let totalXp = baseXp + distXp + cpXp + timeXp;
 
-  const coinReward = Math.floor((distance || 0) * 3) + 5;
+  // Coins
+  const cpCoins = cpVisited * 15;
+  const distCoins = Math.round(km * (GOLD_PER_KM[vehicle] ?? GOLD_PER_KM.feet));
+  let totalCoins = cpCoins + distCoins;
+
+  // Food stop bonus: backend verifies the player actually stayed 5+ min
+  let foodBonus = 0;
+  if (trip?.eat && trip_id) {
+    if (await detectFoodStop(req.user.id, trip_id)) {
+      foodBonus = 50;
+      totalCoins += foodBonus;
+    }
+  }
+
+  // Target (A→B) trips reward planning
+  let targetMultiplier = 1;
+  if (trip?.isTargetTrip) {
+    targetMultiplier = 1.25;
+    totalCoins = Math.round(totalCoins * targetMultiplier);
+  }
+
+  // VIP double drop
+  const isVip = (account.isVip || account.vip) && (!account.vipExpiresAt || new Date(account.vipExpiresAt) > new Date());
+  const vipMultiplier = isVip ? 2 : 1;
+  totalXp *= vipMultiplier;
+  totalCoins *= vipMultiplier;
+
   account.xp = (account.xp || 0) + totalXp;
-  account.gold = (account.gold || 0) + totalGold;
-  account.gridCoins = (account.gridCoins || 0) + coinReward;
-  account.totalDistance = (account.totalDistance || 0) + (distance || 0);
+  account.gold = (account.gold || 0) + totalCoins;
+  account.gridCoins = (account.gridCoins || 0) + totalCoins;
+  account.totalDistance = (account.totalDistance || 0) + km;
   account.totalTrips = (account.totalTrips || 0) + 1;
+  account.is_in_trip = false;
+  account.active_trip_id = null;
+
+  // Per-vehicle progression: trip XP levels up only the transport it was ridden on.
+  // account.xp / account.level stay as the shared account-wide track (missions, arena).
+  account.vehicleXp = account.vehicleXp || {};
+  account.vehicleXp[vehicle] = (account.vehicleXp[vehicle] || 0) + totalXp;
+  account.vehicleLevels = account.vehicleLevels || {};
+  const oldVehicleLevel = account.vehicleLevels[vehicle] || 1;
+  const newVehicleLevel = Math.floor(account.vehicleXp[vehicle] / 1000) + 1;
+  const vehicleLevelUp = newVehicleLevel > oldVehicleLevel;
+  account.vehicleLevels[vehicle] = newVehicleLevel;
 
   const oldLevel = account.level || 1;
   const newLevel = Math.floor((account.xp || 0) / 1000) + 1;
@@ -258,37 +349,108 @@ router.post('/trip/complete', async (req, res) => {
     account.hp = 100;
     account.fuel = 100;
   }
+  // Trips heal: each completed trip restores 10 HP (10 trips = full bar)
+  account.hp = Math.min(100, (account.hp || 0) + 10);
 
   await db.update('accounts', req.user.id, account);
+  if (trip) {
+    await db.update('trips', trip.id, {
+      status: 'completed', finished_at: new Date().toISOString(),
+      result: { km, minutes, cpVisited, totalXp, totalCoins },
+    });
+  }
+
+  // Mission triggers (контракты): tzOffset = client's Date.getTimezoneOffset()
+  let completedMissions = [];
+  try {
+    const missionEngine = require('../missions/missionEngine');
+    const tzOffset = Number(req.body.tzOffset);
+    const startedMs = trip?.started_at ? new Date(trip.started_at).getTime() : Date.now() - (Number(duration) || 0) * 1000;
+    const startHour = new Date(startedMs - (Number.isFinite(tzOffset) ? tzOffset : 0) * 60000).getUTCHours();
+    completedMissions = await missionEngine.handleEvent(req.user.id, 'trip_complete', {
+      km, minutes, cpVisited,
+      transport: vehicle,
+      vibe: trip?.vibe || null,
+      isTargetTrip: !!trip?.isTargetTrip,
+      foodPreference: trip?.eat ? 'restaurant' : null,
+      foodStop7min: trip?.eat && trip_id ? await detectFoodStop(req.user.id, trip_id, 7) : false,
+      startHour,
+    });
+  } catch (e) {
+    console.warn('[missions] trip trigger failed:', e.message);
+  }
 
   res.json({
     success: true,
     totalXp,
-    totalGold,
-    gridCoins: coinReward,
-    baseXp,
-    distXp,
-    wpXp,
-    durationBonus,
-    distance: distance || 0,
+    totalGold: totalCoins,
+    gridCoins: totalCoins,
+    breakdown: {
+      baseXp, distXp, cpXp, timeXp,
+      cpCoins, distCoins, foodBonus,
+      targetMultiplier, vipMultiplier,
+    },
+    // legacy fields for older clients
+    baseXp, distXp, wpXp: cpXp, durationBonus: timeXp,
+    distance: km,
     duration: duration || 0,
-    waypoints_visited: waypoints_visited || 0,
+    waypoints_visited: cpVisited,
     waypoints_total: waypoints_total || 0,
-    visitedRatio,
     levelUp,
     oldLevel,
     newLevel: account.level,
+    vehicle,
+    vehicleXp: account.vehicleXp[vehicle],
+    vehicleLevel: account.vehicleLevels[vehicle],
+    vehicleLevelUp,
+    hp: account.hp,
+    completedMissions,
   });
 });
 
+// Abort trip: clears death protection without rewards
+router.post('/trip/abort', async (req, res) => {
+  const account = await db.findById('accounts', req.user.id);
+  if (!account) return res.status(404).json({ success: false, message: 'Not found' });
+  if (account.active_trip_id) {
+    const trip = await db.findById('trips', account.active_trip_id);
+    if (trip && trip.status === 'active') {
+      await db.update('trips', trip.id, { status: 'aborted', finished_at: new Date().toISOString() });
+    }
+  }
+  await db.update('accounts', req.user.id, { is_in_trip: false, active_trip_id: null });
+  res.json({ success: true });
+});
+
 router.get('/leaderboard', async (req, res) => {
-  const accounts = await db.load('accounts');
+  const rating = require('../engine/ratingSystem');
+  const sortBy = req.query.sort === 'rating' ? 'rating' : 'xp';
+  let accounts = await db.load('accounts');
+
+  // Dedupe by username (case-insensitive), keeping the strongest record.
+  // Guards against duplicate accounts spawned by cold-start auto-recreate
+  // when running without a persistent DB.
+  const byName = new Map();
+  for (const a of accounts) {
+    const key = (a.username || '').toLowerCase().trim() || String(a.id);
+    const cur = byName.get(key);
+    if (!cur || (a.xp || 0) > (cur.xp || 0)) byName.set(key, a);
+  }
+  accounts = [...byName.values()];
+
   const sorted = accounts
-    .map(a => ({ id: a.id, username: a.username, level: a.level || 1, xp: a.xp || 0, gold: a.gold || 0, totalDistance: a.totalDistance || 0, totalTrips: a.totalTrips || 0, vip: a.vip || false, vehicle: a.current_vehicle || 'feet' }))
-    .sort((a, b) => b.xp - a.xp || b.level - a.level)
+    .map(a => ({
+      id: a.id, username: a.username, level: a.level || 1, xp: a.xp || 0, gold: a.gold || 0,
+      totalDistance: a.totalDistance || 0, totalTrips: a.totalTrips || 0, vip: a.vip || false,
+      vehicle: a.current_vehicle || 'feet',
+      arenaRating: rating.getRating(a), arenaRank: rating.getRank(rating.getRating(a)), arenaGames: a.arena_games || 0,
+    }))
+    .sort((a, b) => sortBy === 'rating'
+      ? b.arenaRating - a.arenaRating || b.xp - a.xp
+      : b.xp - a.xp || b.level - a.level)
     .slice(0, 50)
     .map((u, i) => ({ rank: i + 1, ...u }));
-  res.json({ success: true, leaderboard: sorted });
+  res.json({ success: true, leaderboard: sorted, sortBy });
 });
 
 module.exports = router;

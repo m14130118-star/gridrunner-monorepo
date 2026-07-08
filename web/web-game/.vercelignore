@@ -1,0 +1,7 @@
+android
+ios
+.netlify
+.next
+out
+node_modules
+build.log

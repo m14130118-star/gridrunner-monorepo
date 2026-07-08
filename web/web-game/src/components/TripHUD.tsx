@@ -112,7 +112,7 @@ export default function TripHUD({
         background: `${hudColor}08`, borderBottom: `1px solid ${hudColor}15`,
         letterSpacing: '0.02em', opacity: 0.7,
       }}>
-        🎵 {track.artist} — {track.title} · {track.bpm} BPM
+        <i className="fa-solid fa-music"></i> {track.artist} — {track.title} · {track.bpm} BPM
       </div>
 
       {/* Speedometer area */}
@@ -168,7 +168,7 @@ export default function TripHUD({
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'transform 0.3s ease', fontSize: 18,
         }}>
-          🧭
+          <i className="fa-solid fa-compass"></i>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 13, fontWeight: 600, display: 'flex', justifyContent: 'space-between' }}>

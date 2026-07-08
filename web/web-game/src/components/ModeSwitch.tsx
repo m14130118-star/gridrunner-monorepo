@@ -54,7 +54,7 @@ export default function ModeSwitch({ isArena, onChange }: Props) {
     >
       <div className="mode-track">
         <div className="mode-thumb">
-          {isArena ? '⚔️' : '🌿'}
+          <i className={isArena ? 'fa-solid fa-crosshairs' : 'fa-solid fa-leaf'}></i>
         </div>
       </div>
       <span className="mode-label">{isArena ? 'ARENA' : 'CHILL'}</span>

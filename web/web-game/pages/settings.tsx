@@ -3,12 +3,15 @@ import { useRouter } from 'next/router';
 import { BackButton } from '../src/components/BackButton';
 import { useT } from '../src/lib/i18n';
 import { setApiUrl, getApiUrl } from '../src/lib/api';
-import { useAuth } from '../src/lib/auth-context';
 
 export default function SettingsPage() {
   const { t, lang, setLang } = useT();
-  const { user, logout, isAuthenticated } = useAuth();
   const router = useRouter();
+
+  // Auth straight from localStorage: AuthProvider is not mounted in _app,
+  // so useAuth() would always say "not authenticated" and hide the section
+  const [user, setUser] = useState<any>(null);
+  const isAuthenticated = !!user;
 
   const [volume, setVolume] = useState(80);
   const [garageMode, setGarageMode] = useState<'complex' | 'simple'>('complex');
@@ -16,8 +19,13 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [serverUrl, setServerUrl] = useState('http://localhost:3003');
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [idCopied, setIdCopied] = useState(false);
 
   useEffect(() => {
+    try {
+      const raw = localStorage.getItem('gridrunner_user');
+      if (raw) setUser(JSON.parse(raw));
+    } catch {}
     const v = localStorage.getItem('gridrunner_volume');
     const g = localStorage.getItem('gridrunner_garage_mode') as 'complex' | 'simple' | null;
     const m = localStorage.getItem('gridrunner_map_theme') as 'schema' | 'satellite' | null;
@@ -35,11 +43,22 @@ export default function SettingsPage() {
     localStorage.setItem('gridrunner_volume', volume.toString());
   }, [volume]);
 
+  const logout = () => {
+    localStorage.removeItem('gridrunner_user');
+    localStorage.removeItem('gridrunner_token');
+    router.push('/auth/login');
+  };
+
   const handleDeleteAccount = () => {
     const confirmed = confirm(t('settings.delete_confirm'));
     if (!confirmed) return;
-    fetch(getApiUrl() + '/api/v1/auth/register', { method: 'DELETE' }).catch(() => {});
     logout();
+  };
+
+  const copyId = () => {
+    const id = String(user?.id ?? '');
+    if (!id) return;
+    navigator.clipboard?.writeText(id).then(() => { setIdCopied(true); setTimeout(() => setIdCopied(false), 1600); });
   };
 
   const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,26 +96,6 @@ export default function SettingsPage() {
             <i className="fa-solid fa-volume-high"></i>
             <span className="volume-value">{volume}%</span>
           </div>
-        </section>
-
-        {/* Garage Mode */}
-        <section className="settings-section">
-          <h2><i className="fa-solid fa-warehouse"></i> {lang === 'ru' ? 'Гараж' : 'Garage'}</h2>
-          <div className="theme-options">
-            {(['complex', 'simple'] as const).map(m => (
-              <button key={m} data-sound="toggle" className={`theme-btn ${garageMode === m ? 'active' : ''}`} onClick={() => { setGarageMode(m); localStorage.setItem('gridrunner_garage_mode', m); }}>
-                <i className={`fa-solid ${m === 'complex' ? 'fa-cubes' : 'fa-list'}`}></i>
-                {m === 'complex'
-                  ? (lang === 'ru' ? 'Сложный' : 'Complex')
-                  : (lang === 'ru' ? 'Простой' : 'Simple')}
-              </button>
-            ))}
-          </div>
-          <p style={{ fontSize: 12, opacity: 0.4, marginTop: 8 }}>
-            {lang === 'ru'
-              ? 'Сложный — 3D гараж с погодой. Простой — быстрый выбор транспорта.'
-              : 'Complex — 3D garage with weather. Simple — quick vehicle selector.'}
-          </p>
         </section>
 
         {/* Map Theme */}
@@ -148,6 +147,20 @@ export default function SettingsPage() {
           </div>
         </section>
 
+        {/* Support */}
+        <section className="settings-section">
+          <h2><i className="fa-solid fa-headset"></i> {lang === 'ru' ? 'Поддержка' : 'Support'}</h2>
+          <a href="https://t.me/do_re_mi_do_re_do" target="_blank" rel="noopener noreferrer"
+            style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, textDecoration: 'none', color: 'var(--text)', background: 'rgba(0,136,204,0.10)', border: '1px solid rgba(0,136,204,0.25)' }}>
+            <i className="fa-brands fa-telegram" style={{ fontSize: 22, color: '#29b6f6' }}></i>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 700, fontSize: 14 }}>{lang === 'ru' ? 'Написать в Telegram' : 'Contact on Telegram'}</div>
+              <div style={{ fontSize: 12, opacity: 0.5 }}>{lang === 'ru' ? 'Вопросы, баги, идеи' : 'Questions, bugs, ideas'}</div>
+            </div>
+            <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: 13, opacity: 0.5 }}></i>
+          </a>
+        </section>
+
         {/* Account */}
         <section className="settings-section" style={{ padding: 0, overflow: 'hidden' }}>
           {isAuthenticated ? (
@@ -163,10 +176,20 @@ export default function SettingsPage() {
                 </div>
                 <div style={{ fontSize: 20, fontWeight: 800 }}>{user!.username}</div>
                 <div style={{ fontSize: 13, opacity: 0.4, marginTop: 2 }}>{user!.email}</div>
-                <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 8 }}>
-                  <span className="badge" style={{ background: 'rgba(0,230,118,0.1)', color: '#00e676', fontSize: 12 }}>ID: {(user! as any).id || '—'}</span>
+                <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 8, flexWrap: 'wrap' }}>
                   {user!.vip && <span className="badge" style={{ background: 'rgba(255,215,0,0.1)', color: '#ffd740', fontSize: 12 }}>VIP</span>}
                 </div>
+                {/* ID для P2P-трейда — с копированием */}
+                <button onClick={copyId} style={{
+                  marginTop: 12, display: 'inline-flex', alignItems: 'center', gap: 8,
+                  padding: '8px 14px', borderRadius: 10, cursor: 'pointer',
+                  background: 'rgba(0,230,118,0.08)', border: '1px solid rgba(0,230,118,0.3)',
+                  color: '#00e676', fontFamily: 'monospace', fontSize: 13,
+                }}>
+                  <span style={{ opacity: 0.6, fontSize: 11 }}>{lang === 'ru' ? 'ID для трейда:' : 'Trade ID:'}</span>
+                  <span style={{ fontWeight: 800, letterSpacing: 1 }}>{(user! as any).id || '—'}</span>
+                  <i className={`fa-solid ${idCopied ? 'fa-check' : 'fa-copy'}`} style={{ fontSize: 12 }}></i>
+                </button>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: 16 }}>
                 <button className="btn btn-secondary" onClick={logout} style={{ width: '100%', justifyContent: 'center', padding: '12px 0' }}>

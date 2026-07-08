@@ -1,14 +1,14 @@
 const db = require('../common/db');
 const defs = require('./achievement_defs');
 
-function check(userId) {
-  const account = db.findById('accounts', userId);
+async function check(userId) {
+  const account = await db.findById('accounts', userId);
   if (!account) return { unlocked: [], errors: [] };
 
-  const allLocs = db.query('locations', l => l.user_id === userId)
+  const allLocs = (await db.query('locations', { user_id: userId }))
     .sort((a, b) => a.timestamp - b.timestamp);
-  const checkins = db.query('checkins', c => c.user_id === userId);
-  const userAchievements = db.query('achievements', a => a.user_id === userId);
+  const checkins = await db.query('checkins', { user_id: userId });
+  const userAchievements = await db.query('achievements', { user_id: userId });
 
   const earnedIds = new Set(userAchievements.map(a => a.achievement_id));
   const stats = computeStats(account, allLocs, checkins);
@@ -23,7 +23,7 @@ function check(userId) {
         const reward = def.reward || {};
         if (reward.xp) account.xp = (account.xp || 0) + reward.xp;
         if (reward.gold) account.gold = (account.gold || 0) + reward.gold;
-        const ach = db.insert('achievements', {
+        const ach = await db.insert('achievements', {
           user_id: userId,
           achievement_id: def.id,
           unlocked_at: Date.now(),
@@ -37,7 +37,7 @@ function check(userId) {
   }
 
   if (newlyUnlocked.length > 0) {
-    db.update('accounts', userId, account);
+    await db.update('accounts', userId, account);
   }
 
   return { unlocked: newlyUnlocked, errors };

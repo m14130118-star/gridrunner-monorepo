@@ -126,7 +126,7 @@ export default function TripsPage() {
             </div>
 
             <div className="replay-info">
-              <p><strong>{lang === 'ru' ? 'Режим' : 'Mode'}:</strong> {selectedTrip.isArenaMode ? '⚔️ Arena' : '🌿 Chill'}</p>
+              <p><strong>{lang === 'ru' ? 'Режим' : 'Mode'}:</strong> {selectedTrip.isArenaMode ? 'Arena' : 'Chill'}</p>
               <p><strong>Time:</strong> {new Date(selectedTrip.timestamp).toLocaleString()}</p>
               <p><strong>Lat/Lng:</strong> {selectedTrip.latitude?.toFixed(4)}, {selectedTrip.longitude?.toFixed(4)}</p>
             </div>
@@ -143,7 +143,7 @@ export default function TripsPage() {
                 <h3 className="trip-date">{date}</h3>
                 {group.slice(0, 1).map(t => (
                   <div key={t.id} className="trip-card" onClick={() => setSelectedTrip(t)}>
-                    <div className="trip-icon">{t.isArenaMode ? '⚔️' : '🌿'}</div>
+                    <div className="trip-icon"><i className={t.isArenaMode ? 'fa-solid fa-crosshairs' : 'fa-solid fa-leaf'} style={{ color: t.isArenaMode ? '#ff0055' : '#00e676' }}></i></div>
                     <div className="trip-details">
                       <span className="trip-mode">{t.isArenaMode ? 'Arena' : 'Chill'}</span>
                       <span className="trip-time">{new Date(t.timestamp).toLocaleTimeString()}</span>

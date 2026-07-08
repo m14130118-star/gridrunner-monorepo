@@ -34,7 +34,7 @@ export default function Login() {
     return (
       <div className="min-h-screen bg-[#020617] flex items-center justify-center px-6">
         <div className="w-full max-w-md text-center">
-          <div className="text-6xl mb-6">🚀</div>
+          
           <h2 className="text-2xl font-bold text-white mb-2">{lang === 'ru' ? 'С возвращением!' : 'Welcome back!'}</h2>
           <p className="text-[#94a3b8] mb-8">{lang === 'ru' ? 'Открой приложение и продолжай исследовать' : 'Open the app and continue exploring'}</p>
           <a href="/gridrunner.apk" className="inline-flex items-center gap-3 rounded-xl bg-white px-8 py-4 font-semibold text-dark shadow-xl transition-all hover:bg-white/90">

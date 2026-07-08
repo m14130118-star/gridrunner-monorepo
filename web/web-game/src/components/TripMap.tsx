@@ -14,32 +14,34 @@ interface Waypoint {
   score: number; vibe_tags?: string[];
 }
 
-export default function TripMap({ path, waypoints, finish, currentPos }: {
+interface Checkpoint {
+  order: number; name: string; vibe: string; lat: number; lng: number;
+  kind?: string;
+}
+
+// Tactical radar map: top-down locked, neon data-line route,
+// checkpoints as 30 m capture circles instead of nav pins.
+export default function TripMap({ path, waypoints, finish, currentPos, plannedPath, checkpoints, visited }: {
   path: [number, number][];
   waypoints?: Waypoint[];
   finish?: Waypoint;
   currentPos?: [number, number] | null;
+  plannedPath?: [number, number][];
+  checkpoints?: Checkpoint[];
+  visited?: Set<number>;
 }) {
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const polylineRef = useRef<L.Polyline | null>(null);
-  const wpMarkersRef = useRef<L.Marker[]>([]);
+  const plannedRef = useRef<L.Polyline | null>(null);
+  const plannedGlowRef = useRef<L.Polyline | null>(null);
+  const cpLayersRef = useRef<L.Layer[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const wpIcon = L.divIcon({
-    className: '',
-    html: '<div style="width:22px;height:22px;border-radius:50%;background:#7c3aed;border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,0.5)"><i class="fa-solid fa-flag" style="font-size:11px"></i></div>',
-    iconSize: [22, 22], iconAnchor: [11, 11],
-  });
-  const finishIcon = L.divIcon({
-    className: '',
-    html: '<div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ffd740,#ff9100);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.5)">🏁</div>',
-    iconSize: [28, 28], iconAnchor: [14, 14],
-  });
   const posIcon = L.divIcon({
     className: '',
-    html: '<div style="width:16px;height:16px;border-radius:50%;background:#00e676;border:3px solid #fff;box-shadow:0 0 12px rgba(0,230,118,0.5),0 2px 8px rgba(0,0,0,0.5)"></div>',
-    iconSize: [16, 16], iconAnchor: [8, 8],
+    html: '<div class="gr-player-dot"><div class="gr-player-core"></div></div>',
+    iconSize: [18, 18], iconAnchor: [9, 9],
   });
 
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function TripMap({ path, waypoints, finish, currentPos }: {
     const savedTheme = localStorage.getItem('gridrunner_map_theme') || 'schema';
     const defaultLayer = savedTheme === 'satellite' ? satellite : darkSchema;
 
+    // Top-down lock: no tilt, no rotation — tactical recon view only
     const map = L.map(containerRef.current, {
       zoomControl: false, attributionControl: false,
       layers: [defaultLayer]
@@ -66,13 +69,24 @@ export default function TripMap({ path, waypoints, finish, currentPos }: {
     }, undefined, { position: 'topright' }).addTo(map);
 
     const marker = L.marker([55.75, 37.62], { icon: posIcon, zIndexOffset: 1000 }).addTo(map);
+    // traveled path
     const polyline = L.polyline([], {
-      color: '#007aff', weight: 5, opacity: 0.8,
+      color: '#00e5ff', weight: 4, opacity: 0.75,
+    }).addTo(map);
+    // planned route: glow underlay + animated data-line
+    const plannedGlow = L.polyline([], {
+      color: '#00e676', weight: 11, opacity: 0.15,
+    }).addTo(map);
+    const planned = L.polyline([], {
+      color: '#00e676', weight: 3.5, opacity: 0.95,
+      dashArray: '10 8', className: 'gr-route-anim',
     }).addTo(map);
 
     mapRef.current = map;
     markerRef.current = marker;
     polylineRef.current = polyline;
+    plannedRef.current = planned;
+    plannedGlowRef.current = plannedGlow;
 
     return () => {
       map.remove();
@@ -86,6 +100,17 @@ export default function TripMap({ path, waypoints, finish, currentPos }: {
   }, [path]);
 
   useEffect(() => {
+    if (!plannedRef.current || !plannedPath || plannedPath.length < 2) return;
+    const lls = plannedPath.map(p => L.latLng(p[0], p[1]));
+    plannedRef.current.setLatLngs(lls);
+    plannedGlowRef.current?.setLatLngs(lls);
+    // First fit: show the whole route once
+    if (mapRef.current && path.length <= 1) {
+      mapRef.current.fitBounds(L.latLngBounds(lls), { padding: [40, 40] });
+    }
+  }, [plannedPath]);
+
+  useEffect(() => {
     if (path.length === 0 || !mapRef.current || !markerRef.current) return;
     const last = path[path.length - 1];
     markerRef.current.setLatLng(last);
@@ -95,27 +120,63 @@ export default function TripMap({ path, waypoints, finish, currentPos }: {
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
-    wpMarkersRef.current.forEach(m => m.remove());
-    wpMarkersRef.current = [];
-    if (waypoints) {
+    cpLayersRef.current.forEach(m => m.remove());
+    cpLayersRef.current = [];
+
+    const addCheckpoint = (lat: number, lng: number, idx: number, name: string, sub: string, kind: string, done: boolean) => {
+      const color = done ? '#00e676' : kind === 'food' ? '#ffd54f' : kind === 'finish' ? '#00e5ff' : '#76ff8f';
+      // 30 m data-capture zone
+      const zone = L.circle([lat, lng], {
+        radius: 30, color, weight: 2,
+        opacity: done ? 0.9 : 0.65,
+        fillColor: color, fillOpacity: done ? 0.25 : 0.08,
+        className: done ? '' : 'gr-cp-pulse',
+      }).addTo(map);
+      const iconHtml = done
+        ? `<div class="gr-cp-marker gr-cp-done"><i class="fa-solid fa-check"></i></div>`
+        : kind === 'food'
+          ? `<div class="gr-cp-marker gr-cp-food"><i class="fa-solid fa-utensils"></i></div>`
+          : kind === 'finish'
+            ? `<div class="gr-cp-marker gr-cp-finish"><i class="fa-solid fa-flag-checkered"></i></div>`
+            : `<div class="gr-cp-marker">${idx}</div>`;
+      const m = L.marker([lat, lng], {
+        icon: L.divIcon({ className: '', html: iconHtml, iconSize: [26, 26], iconAnchor: [13, 13] }),
+      }).addTo(map);
+      m.bindTooltip(`<b>${name}</b><br><span style="opacity:0.7">${sub}</span>`, { direction: 'top', offset: L.point(0, -16) });
+      cpLayersRef.current.push(zone, m);
+    };
+
+    if (checkpoints && checkpoints.length > 0) {
+      checkpoints.forEach((cp, i) => {
+        addCheckpoint(cp.lat, cp.lng, i + 1, cp.name, cp.vibe, cp.kind || 'poi', visited?.has(cp.order) || false);
+      });
+    } else if (waypoints) {
       waypoints.forEach((wp, i) => {
-        const label = document.createElement('div');
-        label.style.cssText = 'width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#6d28d9);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,0.5)';
-        label.textContent = String(i + 1);
-        const icon = L.divIcon({ className: '', html: label.outerHTML, iconSize: [24, 24], iconAnchor: [12, 12] });
-        const m = L.marker([wp.lat, wp.lng], { icon }).addTo(map);
-        m.bindTooltip(`<b>${wp.name}</b><br>${wp.score} XP`, { direction: 'top', offset: L.point(0, -14) });
-        wpMarkersRef.current.push(m);
+        addCheckpoint(wp.lat, wp.lng, i + 1, wp.name, `${wp.score} XP`, 'poi', false);
       });
     }
     if (finish) {
-      const m = L.marker([finish.lat, finish.lng], { icon: finishIcon }).addTo(map);
-      m.bindTooltip(`🏁 <b>${finish.name}</b>`, { direction: 'top', offset: L.point(0, -16) });
-      wpMarkersRef.current.push(m);
+      addCheckpoint(finish.lat, finish.lng, 0, finish.name, 'FINISH', 'finish', false);
     }
-  }, [waypoints, finish]);
+  }, [waypoints, finish, checkpoints, visited]);
 
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+    <>
+      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+      <style jsx global>{`
+        @keyframes gr-dash-march { to { stroke-dashoffset: -36; } }
+        .gr-route-anim { animation: gr-dash-march 1.4s linear infinite; filter: drop-shadow(0 0 4px rgba(0,230,118,0.8)); }
+        @keyframes gr-cp-blink { 0%,100% { fill-opacity: 0.08; } 50% { fill-opacity: 0.22; } }
+        .gr-cp-pulse { animation: gr-cp-blink 2.4s ease-in-out infinite; }
+        .gr-player-dot { width: 18px; height: 18px; border-radius: 50%; position: relative; }
+        .gr-player-dot::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 2px solid rgba(0,230,118,0.55); animation: gr-ping 1.8s ease-out infinite; }
+        .gr-player-core { position: absolute; inset: 2px; border-radius: 50%; background: #00e676; border: 2px solid #fff; box-shadow: 0 0 14px rgba(0,230,118,0.9); }
+        @keyframes gr-ping { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
+        .gr-cp-marker { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: monospace; color: #04120a; background: #76ff8f; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 0 10px rgba(0,230,118,0.6), 0 2px 8px rgba(0,0,0,0.5); }
+        .gr-cp-done { background: #00e676; }
+        .gr-cp-food { background: #ffd54f; box-shadow: 0 0 10px rgba(255,213,79,0.6), 0 2px 8px rgba(0,0,0,0.5); }
+        .gr-cp-finish { background: #00e5ff; box-shadow: 0 0 10px rgba(0,229,255,0.6), 0 2px 8px rgba(0,0,0,0.5); }
+      `}</style>
+    </>
   );
 }
