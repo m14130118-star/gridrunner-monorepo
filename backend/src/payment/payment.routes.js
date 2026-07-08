@@ -1,7 +1,13 @@
 const { Router } = require('express');
-const crypto = require('crypto');
 const db = require('../common/db');
 const { authenticate } = require('../common/middleware');
+
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0;
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
+}
 
 const router = Router();
 
@@ -117,7 +123,7 @@ router.post('/business-pay', async (req, res) => {
   try {
     const result = await plategaRequest('POST', '/transaction/process', {
       paymentMethod,
-      id: crypto.randomUUID(),
+      id: uuid(),
       paymentDetails: { amount, currency: 'RUB' },
       description: 'Услуги GridRunner Business',
       return: `${origin}/business?success=1`,
